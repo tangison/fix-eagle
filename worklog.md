@@ -83,3 +83,60 @@ Stage Summary:
 - Preview guard: non-production hosts carry X-Robots-Tag noindex until
   fixeagleinvestments.com is connected (set PRODUCTION_HOST env var or
   update src/proxy.ts).
+
+---
+Task ID: 3
+Agent: Super Z (main agent)
+Task: Revision round per client feedback: Target.com typography bar,
+Collins hamburger menu, widgets, brown theme, wordmark fix.
+
+Work Log:
+- Re-fetched the filebin (still live); recovered exact brand codes:
+  gold #CDA666, charcoal #393936, slate-navy #44536A (headings),
+  orange #EC7C30 (sparing), white base.
+- Studied the bars live: extracted Target's font ("Helvetica for
+  Target", weights 400/500/600/700/800) from their CSS; screenshotted
+  and measured the wearecollins.com menu (72px links, #140700 overlay,
+  two-line icon, featured column, pill CTA).
+- Typography: self-hosted Inter variable (closest world-class match),
+  single family, 400 body / 700 headings / 800 hero; pill CTAs.
+- Wordmark: FIX EAGLE / AUCTIONEERS (Investments removed, header and
+  footer); trading name kept in metadata and legal lines.
+- Palette re-anchored on the exact brand hexes; headings slate-navy,
+  ink charcoal, links deep gold #7A5E22; brown theme (.theme-brown,
+  cocoa #2E261B ground, ivory text, gold headings) on privacy, terms,
+  disclaimer, brand only; header joins the brown ground via :has().
+- Widgets: Collins-style full-screen menu overlay on all viewports
+  (staggered links, featured work, gold pill CTA); desktop mega
+  dropdowns (Services, Company) with hover intent; channel tabs;
+  process tabs; embla case-study carousel (arrows above, gold dots);
+  sector filter dropdown; services accordion; count of text cut hard
+  across home/services/process/about.
+- Three production bugs found and fixed: (1) hero text invisible:
+  Tailwind cannot infer text-[var(--photo-ink)] as color next to a
+  text-[length] utility, plus unlayered base CSS overriding layered
+  utilities (moved base into @layer base, real .photo-text classes);
+  (2) text-muted resolving to the shadcn surface token (--color-muted:
+  var(--paper-2)) so all muted text rendered near-white on white
+  (renamed token to --color-soft, swept all usages); (3) 1440px hero
+  width 400ing the Next optimizer (blank hero on desktop; added 1440
+  to deviceSizes and 82 to qualities).
+- Gauntlet blind-critic loops (VLM, labels stripped): menu lost to
+  Collins in round 1 (links cramped, muddy bg, heavy bottom bar),
+  refined, round 3 the critic picked OUR menu over the Collins
+  reference. Home audited against the Target register: tabs, dots,
+  arrows, mega spacing and brown text brightness upgraded per verdict.
+- Verified in production build: all routes 200, no console errors, no
+  horizontal scroll at 320/390/768/1440, menu/dropdown/tabs/carousel/
+  filter/accordion/form all interactive, WhatsApp handoff prefilled,
+  dark mode toggle, hero 800-weight white on photo, contrast checked
+  numerically (soft 7.66:1 on white, brown muted 9.5:1 on cocoa).
+- Pushed 8ab3495 to github.com/tangison/fix-eagle; Vercel auto-deploy
+  verified live: all routes 200, new wordmark live, AVIF hero 200,
+  robots and sitemap 200.
+
+Stage Summary:
+- Live revision deployed at
+  https://fix-eagle-targis47s-projects.vercel.app
+- Menu overlay wins the blind comparison against the Collins bar;
+  typography now runs the Target register on exact brand color codes.
