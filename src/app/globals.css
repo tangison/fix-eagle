@@ -1,0 +1,436 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-paper-3: var(--paper-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-rule-2: var(--rule-2);
+  --color-accent: var(--accent);
+  --color-accent-deep: var(--accent-deep);
+  --color-accent-ink: var(--accent-ink);
+  --color-focus: var(--focus);
+
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+
+  /* shadcn token bridge, mapped onto the Fix Eagle palette */
+  --color-background: var(--paper);
+  --color-foreground: var(--ink);
+  --color-card: var(--paper);
+  --color-card-foreground: var(--ink);
+  --color-popover: var(--paper);
+  --color-popover-foreground: var(--ink);
+  --color-primary: var(--ink);
+  --color-primary-foreground: var(--paper);
+  --color-secondary: var(--paper-2);
+  --color-secondary-foreground: var(--ink);
+  --color-muted: var(--paper-2);
+  --color-muted-foreground: var(--muted);
+  --color-accent-foreground: var(--ink);
+  --color-destructive: oklch(55% 0.18 30);
+  --color-border: var(--rule);
+  --color-input: var(--rule);
+  --color-ring: var(--focus);
+
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: clip;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Focus is instant, always visible, never animated in */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  text-wrap: balance;
+}
+
+/* Reduced motion: spatial motion collapses to opacity crossfade */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 150ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 150ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Layout primitives
+   -------------------------------------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.shell-wide {
+  width: 100%;
+  max-width: 90rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--space-3xl);
+}
+
+@media (min-width: 60rem) {
+  .section { padding-block: var(--space-4xl); }
+}
+
+.measure {
+  max-width: 64ch;
+}
+
+/* --------------------------------------------------------------------------
+   Typography utilities
+   -------------------------------------------------------------------------- */
+
+/* Small caps label. Used for nav links, captions and metadata only. */
+.label-caps {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+/* Photo caption, provenance register */
+.caption {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Links and buttons
+   -------------------------------------------------------------------------- */
+
+/* Typographic link with a drawing underline (C3) */
+.link-type {
+  color: var(--accent-deep);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size var(--dur-short) var(--ease-out);
+  padding-bottom: 2px;
+  white-space: nowrap;
+}
+.link-type:hover,
+.link-type:focus-visible {
+  background-size: 100% 1px;
+}
+
+.link-type.on-photo {
+  color: var(--photo-ink);
+}
+
+/* Outlined chip (C1), sharp corners, print register */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  border: 1px solid currentColor;
+  padding: 0.8rem 1.4rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.86rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    transform 100ms var(--ease-out);
+}
+.btn-outline:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.btn-outline:active {
+  transform: translateY(1px);
+}
+
+/* Light-on-photo variant */
+.btn-outline.on-photo {
+  color: var(--photo-ink);
+}
+.btn-outline.on-photo:hover {
+  background: var(--photo-ink);
+  color: var(--photo-ink-contrast);
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  left: var(--space-md);
+  top: calc(-1 * var(--space-3xl));
+  z-index: var(--z-toast);
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-sm) var(--space-lg);
+  transition: top var(--dur-short) var(--ease-out);
+}
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+/* --------------------------------------------------------------------------
+   Hairlines
+   -------------------------------------------------------------------------- */
+
+.hair-t { border-top: var(--rule-hair) solid var(--rule); }
+.hair-b { border-bottom: var(--rule-hair) solid var(--rule); }
+
+/* --------------------------------------------------------------------------
+   Hero entrance, the single orchestrated motion on each page
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: reveal var(--dur-long) var(--ease-out) forwards;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes reveal {
+  to { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   Header
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  z-index: var(--z-sticky-nav);
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+  border-bottom: var(--rule-hair) solid transparent;
+  color: var(--ink);
+}
+
+.site-header.is-solid {
+  background: var(--paper);
+  border-bottom-color: var(--rule);
+}
+
+.site-header.on-photo {
+  color: var(--photo-ink);
+}
+.site-header.on-photo.is-solid {
+  color: var(--ink);
+}
+
+/* --------------------------------------------------------------------------
+   Footer statement (Ft5)
+   -------------------------------------------------------------------------- */
+
+.foot-statement {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  max-width: 24ch;
+}
+
+/* --------------------------------------------------------------------------
+   FAQ accordion (Radix), hairline register, no boxes
+   -------------------------------------------------------------------------- */
+
+.faq-item {
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.faq-item:first-child {
+  border-top: var(--rule-hair) solid var(--rule);
+}
+.faq-trigger {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-block: var(--space-lg);
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+  transition: color var(--dur-short) var(--ease-out);
+}
+.faq-trigger:hover {
+  color: var(--accent-deep);
+}
+.faq-trigger .faq-sign {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  line-height: 1;
+  flex: none;
+  transition: transform var(--dur-short) var(--ease-out);
+}
+.faq-trigger[data-state="open"] .faq-sign {
+  transform: rotate(45deg);
+}
+.faq-content {
+  overflow: hidden;
+}
+.faq-content[data-state="open"] {
+  animation: faq-open var(--dur-long) var(--ease-in-out);
+}
+.faq-content[data-state="closed"] {
+  animation: faq-close calc(var(--dur-long) * 0.75) var(--ease-in);
+}
+@keyframes faq-open {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes faq-close {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Form fields, hairline register
+   -------------------------------------------------------------------------- */
+
+.field-label {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  margin-bottom: var(--space-sm);
+}
+
+.field-input {
+  width: 100%;
+  min-height: 3rem;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 0.75rem 1rem;
+  transition: border-color var(--dur-short) var(--ease-out);
+  border-radius: 0;
+}
+.field-input:hover {
+  border-color: var(--muted);
+}
+.field-input:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+  border-color: var(--muted);
+}
+.field-input::placeholder {
+  color: var(--muted);
+}
+.field-error {
+  min-height: 1.5lh;
+  font-size: 0.82rem;
+  color: oklch(50% 0.16 30);
+  margin-top: var(--space-2xs);
+}
+.dark .field-error { color: oklch(72% 0.14 30); }
+
+select.field-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23888' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Reference table
+   -------------------------------------------------------------------------- */
+
+.ref-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.ref-table th {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: var(--space-md) var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--rule);
+}
+.ref-table td {
+  padding: var(--space-lg) var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--rule-2);
+  vertical-align: top;
+  color: var(--ink-2);
+}
+.ref-table td:first-child {
+  color: var(--ink);
+  font-weight: 500;
+}

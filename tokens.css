@@ -1,0 +1,96 @@
+/* ==========================================================================
+   Fix Eagle Investments Auctioneers · design tokens
+   --------------------------------------------------------------------------
+   Hallmark · macrostructure: Photographic · genre: editorial (luxury lean)
+   route: custom (tuned) · theme axes: light paper / roman-serif / warm-gold
+   paper: oklch(96.8% 0.012 90) · accent: oklch(73% 0.1 85)
+   display: Cormorant Garamond · body: Switzer
+   nav: N9-derived edge-aligned · footer: Ft5 statement
+   pre-emit critique: P4 H4 E5 S5 R5 V5
+   contrast: pass (40-41) · honest: pass (46) · tokens: pass (48)
+   ========================================================================== */
+
+:root {
+  /* Paper, ink, neutrals. Warm ivory paper, warm charcoal ink, all tinted
+     toward the gold anchor hue (85-90). No pure black, no pure white. */
+  --paper:      oklch(96.8% 0.012 90);
+  --paper-2:    oklch(94.6% 0.014 88);
+  --paper-3:    oklch(92.2% 0.015 86);
+  --ink:        oklch(24.5% 0.012 80);
+  --ink-2:      oklch(33% 0.013 80);
+  --muted:      oklch(38% 0.016 78);
+  --rule:       oklch(86% 0.013 88);
+  --rule-2:     oklch(91.5% 0.012 89);
+
+  /* Single accent: brand gold. Deep bronze carries the accent in text and
+     links where gold itself would fall short of AA contrast on paper. */
+  --accent:      oklch(73% 0.1 85);
+  --accent-deep: oklch(48% 0.085 76);
+  --accent-ink:  oklch(98% 0.01 90);
+
+  --focus: oklch(54% 0.12 70);
+
+  /* Fixed overlay tokens. The hero photograph is dark in both themes, so
+     text and scrims over photos never follow the light or dark mode flip. */
+  --photo-ink: oklch(96.5% 0.01 90);
+  --photo-ink-contrast: oklch(23% 0.012 80);
+  --photo-scrim: oklch(21% 0.012 80);
+
+  /* Type. next/font exposes the loaded families through its own variables;
+     the stacks after each var() are metric-similar fallbacks. */
+  --font-display: var(--font-display-loaded, Georgia), "Times New Roman", serif;
+  --font-body: var(--font-body-loaded, "Helvetica Neue"), Arial, sans-serif;
+
+  /* Spacing scale, 4pt base */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+  --space-4xl: 9rem;
+
+  /* Page gutter */
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+
+  /* Z-index scale */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+
+  /* Rules */
+  --rule-hair: 1px;
+}
+
+.dark {
+  /* Dark mode: warm charcoal paper, same gold anchor, lighter ink.
+     Hue never moves between modes; only lightness and chroma. */
+  --paper:      oklch(17.5% 0.008 80);
+  --paper-2:    oklch(20.5% 0.009 80);
+  --paper-3:    oklch(24% 0.01 80);
+  --ink:        oklch(93% 0.008 90);
+  --ink-2:      oklch(84% 0.008 88);
+  --muted:      oklch(74% 0.012 84);
+  --rule:       oklch(30% 0.01 82);
+  --rule-2:     oklch(25% 0.009 82);
+
+  --accent:      oklch(76% 0.1 85);
+  --accent-deep: oklch(78% 0.09 85);
+  --accent-ink:  oklch(16% 0.01 80);
+
+  --focus: oklch(74% 0.12 75);
+}
