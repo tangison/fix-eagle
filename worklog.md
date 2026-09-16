@@ -51,3 +51,35 @@ Stage Summary:
   stats. Footer carries the Tangison Studio credit and copyright.
 - Next: commit, push to GitHub (PAT provided), deploy to Vercel (token
   provided).
+
+---
+Task ID: 2
+Agent: Super Z (main agent)
+Task: GitHub push and Vercel deployment.
+
+Work Log:
+- Created github.com/tangison/fix-eagle (PAT auth), untracked the scaffold
+  .env, pushed main.
+- Created Vercel project fix-eagle (team targis47s-projects) git-linked to
+  the repo, production branch main.
+- Debugged production 404s: root cause was output:"standalone" plus the
+  self-hosting build script (cp into .next/standalone). Dropped both, set
+  project framework to nextjs. Deploys green since commit 5cd0bf1.
+- Relaxed project ssoProtection from all_except_custom_domains to preview
+  scope, then to disabled, so the production vercel.app URL is publicly
+  reachable.
+- Perf pass: slimmed favicon (204KB to 23KB), manifest icon now a 192px
+  variant (was the 219KB raw logo), dropped the unused Cormorant 700 weight,
+  hero quality 82, AVIF-first image formats. First-load now ~470KB.
+- Verified live: all 14 routes plus SEO endpoints 200, 404 works, contact
+  form hands off to WhatsApp with prefilled message, fonts loaded, no
+  console errors.
+- Contrast verified numerically: all text tokens exceed WCAG AAA
+  (muted 9.14:1, ink 14.8:1, links 6.04:1, photo text 16:1).
+
+Stage Summary:
+- Live at https://fix-eagle-targis47s-projects.vercel.app (auto-deploys
+  from GitHub main).
+- Preview guard: non-production hosts carry X-Robots-Tag noindex until
+  fixeagleinvestments.com is connected (set PRODUCTION_HOST env var or
+  update src/proxy.ts).
