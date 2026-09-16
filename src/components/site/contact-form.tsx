@@ -160,11 +160,11 @@ export function ContactForm() {
         />
       </div>
       <div className="flex flex-wrap items-center gap-6">
-        <button type="submit" className="btn-outline">
+        <button type="submit" className="btn">
           Send on WhatsApp
           <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} aria-hidden />
         </button>
-        <p className="text-[0.85rem] text-muted">
+        <p className="text-[0.85rem] text-soft">
           Opens WhatsApp with your message prefilled. Nothing is stored on this
           site.
         </p>

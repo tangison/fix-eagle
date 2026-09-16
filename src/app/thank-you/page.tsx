@@ -27,7 +27,7 @@ export default function ThankYouPage() {
             {site.phoneDisplay}
           </a>
         </div>
-        <p className="mt-10 text-muted">
+        <p className="mt-10 text-soft">
           While you wait, read{" "}
           <Link href="/process" className="link-type">
             how an auction runs

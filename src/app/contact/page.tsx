@@ -31,7 +31,7 @@ export default function ContactPage() {
 
           <aside className="space-y-10 md:pt-2" aria-label="Direct contact">
             <div>
-              <h2 className="label-caps text-muted">Direct</h2>
+              <h2 className="label-caps text-soft">Direct</h2>
               <ul className="mt-4 space-y-4 text-[0.98rem]">
                 <li className="flex items-start gap-3">
                   <Phone
@@ -62,7 +62,7 @@ export default function ContactPage() {
                     strokeWidth={1.5}
                     aria-hidden
                   />
-                  <span className="text-muted">{site.address}</span>
+                  <span className="text-soft">{site.address}</span>
                 </li>
               </ul>
               <p className="mt-4">
@@ -78,8 +78,8 @@ export default function ContactPage() {
             </div>
 
             <div className="hair-t pt-8">
-              <h2 className="label-caps text-muted">Coverage</h2>
-              <p className="measure mt-4 text-[0.95rem] text-muted">
+              <h2 className="label-caps text-soft">Coverage</h2>
+              <p className="measure mt-4 text-[0.95rem] text-soft">
                 All fourteen regions of Namibia, and auctions executed anywhere
                 in Africa or the world. Outside Windhoek, we train and
                 remunerate local casuals as part of the auction team.
@@ -87,8 +87,8 @@ export default function ContactPage() {
             </div>
 
             <div className="hair-t pt-8">
-              <h2 className="label-caps text-muted">Buying at auction</h2>
-              <p className="measure mt-4 text-[0.95rem] text-muted">
+              <h2 className="label-caps text-soft">Buying at auction</h2>
+              <p className="measure mt-4 text-[0.95rem] text-soft">
                 Upcoming auctions are announced through our marketing channels.
                 Message us on WhatsApp to be notified of the next sale in your
                 region.

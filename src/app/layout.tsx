@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond } from "next/font/google";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { SiteHeader } from "@/components/site/site-header";
@@ -7,20 +6,14 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const display = Cormorant_Garamond({
-  variable: "--font-display-loaded",
-  weight: ["400", "500", "600"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
+/**
+ * Inter variable, self-hosted. The closest world-class match to
+ * Target's "Helvetica for Target": one file carries every weight the
+ * site uses (400 body, 500/600 emphasis, 700 headings, 800 display).
+ */
 const body = localFont({
   variable: "--font-body-loaded",
-  src: [
-    { path: "../fonts/switzer-400.woff2", weight: "400", style: "normal" },
-    { path: "../fonts/switzer-500.woff2", weight: "500", style: "normal" },
-    { path: "../fonts/switzer-600.woff2", weight: "600", style: "normal" },
-  ],
+  src: [{ path: "../fonts/inter-var-latin.woff2", weight: "100 900", style: "normal" }],
   display: "swap",
 });
 
@@ -73,8 +66,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#CDA666" },
-    { media: "(prefers-color-scheme: dark)", color: "#2b2a26" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#26231E" },
   ],
 };
 
@@ -88,7 +81,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`${display.variable} ${body.variable}`}
+      className={body.variable}
     >
       <body className="antialiased bg-paper text-ink">
         <ThemeProvider>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/site/page-hero";
 import { PhotoFigure } from "@/components/site/photo-figure";
+import { ProcessTabs } from "@/components/site/process-tabs";
 import { processSteps, site } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -28,45 +29,19 @@ export default function ProcessPage() {
       </PageHero>
 
       <section className="shell" aria-label="Process steps">
-        <ol>
-          {processSteps.map((step, i) => (
-            <li
-              key={step.name}
-              className="hair-t grid gap-4 py-12 md:grid-cols-[18rem_1fr] md:gap-14 md:py-16"
-            >
-              <div>
-                <span className="label-caps tnum text-accent-deep">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h2 className="mt-3 text-[clamp(1.7rem,3vw,2.5rem)]">
-                  {step.name}
-                </h2>
-              </div>
-              <p className="measure self-start text-muted md:pt-10">
-                {step.body}
-              </p>
-            </li>
-          ))}
-          <li className="hair-t" aria-hidden />
-        </ol>
+        <ProcessTabs steps={processSteps} />
       </section>
 
       <section className="section" aria-label="Methodology">
         <div className="shell grid items-center gap-12 md:grid-cols-2 md:gap-20">
           <div>
-            <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">Our footprint</h2>
-            <p className="measure mt-7 text-muted">
-              Our work is our footprint. We always strive to provide the best
-              possible service, adding value to our clients. To us,
-              auctioneering is about passion, tenacity and hard work: with all
-              our auction sales, our objective is to beat the odds and create a
-              unique sales experience for buyers and sellers alike.
-            </p>
-            <p className="measure mt-5 text-muted">
-              If an auction falls outside Windhoek, we train local casuals to
-              be part of the auction team, with financial and skills
-              compensation. More than fifty casuals have been trained through
-              our regional auctions.
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">Our footprint</h2>
+            <p className="measure mt-7 text-soft">
+              With all our auction sales, our objective is to beat the odds and
+              create a unique sales experience for buyers and sellers alike.
+              Outside Windhoek, we train and remunerate local casuals to be
+              part of the auction team: more than fifty trained through our
+              regional auctions so far.
             </p>
           </div>
           <PhotoFigure
@@ -81,15 +56,14 @@ export default function ProcessPage() {
       <section className="section hair-t" aria-label="Records">
         <div className="shell grid items-center gap-12 md:grid-cols-2 md:gap-20">
           <div className="md:order-2">
-            <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
               Records you can rely on
             </h2>
-            <p className="measure mt-7 text-muted">
+            <p className="measure mt-7 text-soft">
               Every asset and process is documented through FlexiAuction, the
-              auctioneering software commonly used by auction houses. It
-              generates the data and records behind every sale: reports of
-              sales, clients, records of turnover, and all proceeds and
-              payments collected.
+              auctioneering software used by auction houses. It generates the
+              data behind every sale: reports of sales, clients, turnover,
+              proceeds and payments collected.
             </p>
             <p className="mt-6">
               <a href={site.whatsapp} className="link-type text-[0.95rem]">
@@ -110,16 +84,18 @@ export default function ProcessPage() {
 
       <section className="section hair-t" aria-label="Next step">
         <div className="shell">
-          <p className="font-serif text-[clamp(1.5rem,2.5vw,2.1rem)]">
-            Ready to put assets on the block?
-          </p>
-          <div className="mt-8 flex flex-wrap items-center gap-7">
-            <a href={site.whatsapp} className="btn-outline">
-              Request an appraisal
-            </a>
-            <Link href="/case-studies" className="link-type text-[0.95rem]">
-              See the trade references
-            </Link>
+          <div className="rounded-[var(--r-card)] bg-paper-2 px-6 py-14 md:px-14 md:py-16">
+            <p className="text-[clamp(1.5rem,2.6vw,2.1rem)] font-bold tracking-[-0.02em]">
+              Ready to put assets on the block?
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <a href={site.whatsapp} className="btn">
+                Request an appraisal
+              </a>
+              <Link href="/case-studies" className="link-type text-[0.95rem]">
+                See the trade references
+              </Link>
+            </div>
           </div>
         </div>
       </section>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BrownPage } from "@/components/site/brown-page";
 import { PageHero } from "@/components/site/page-hero";
 import { site } from "@/lib/site";
 
@@ -64,26 +65,28 @@ const sections = [
 
 export default function TermsPage() {
   return (
-    <>
-      <PageHero title="Terms and conditions">
-        The rules of the house, for the website and for the auctions we
-        conduct. Auction-specific conditions are announced with each sale.
-      </PageHero>
-      <section className="shell pb-28">
-        {sections.map((section) => (
-          <div key={section.h} className="hair-t grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-14">
-            <h2 className="text-[1.35rem] font-medium">{section.h}</h2>
-            <div className="measure space-y-4 text-muted">
-              {section.body.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+    <BrownPage>
+      <>
+        <PageHero title="Terms and conditions">
+          The rules of the house, for the website and for the auctions we
+          conduct. Auction-specific conditions are announced with each sale.
+        </PageHero>
+        <section className="shell pb-28">
+          {sections.map((section) => (
+            <div key={section.h} className="hair-t grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-14">
+              <h2 className="text-[1.35rem] font-semibold">{section.h}</h2>
+              <div className="measure space-y-4 text-soft">
+                {section.body.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
             </div>
+          ))}
+          <div className="hair-t pt-6 text-[0.85rem] text-soft">
+            Last updated September 2026.
           </div>
-        ))}
-        <div className="hair-t pt-6 text-[0.85rem] text-muted">
-          Last updated September 2026.
-        </div>
-      </section>
-    </>
+        </section>
+      </>
+    </BrownPage>
   );
 }

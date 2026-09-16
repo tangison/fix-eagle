@@ -20,7 +20,7 @@ export default function NotFound() {
       <h1 className="mt-8 text-[clamp(2.4rem,5.5vw,4.2rem)]">
         This lot has moved.
       </h1>
-      <p className="measure mt-5 text-muted">
+      <p className="measure mt-5 text-soft">
         The page you were looking for is not on the block. Everything else is
         one click away.
       </p>

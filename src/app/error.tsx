@@ -13,7 +13,7 @@ export default function ErrorPage({
       <h1 className="text-[clamp(2.4rem,5.5vw,4.2rem)]">
         The gavel came down wrong.
       </h1>
-      <p className="measure mt-5 text-muted">
+      <p className="measure mt-5 text-soft">
         Something on our side failed to load. Try again, and if it keeps
         failing, tell us on WhatsApp.
       </p>

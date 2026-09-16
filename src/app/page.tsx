@@ -2,8 +2,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
-import { PhotoFigure } from "@/components/site/photo-figure";
-import { processSteps, references, saleChannels, services, site, stats } from "@/lib/site";
+import { PhotoCarousel } from "@/components/site/photo-carousel";
+import { ChannelTabs } from "@/components/site/channel-tabs";
+import {
+  featuredWork,
+  processSteps,
+  services,
+  site,
+  stats,
+} from "@/lib/site";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -35,6 +42,30 @@ const organizationJsonLd = {
   },
 };
 
+const channels = [
+  {
+    name: "Live auctions",
+    body: "Onsite auctions, planned, coordinated and executed for maximum sales and full attendance of prospective bidders.",
+    photo: "/images/live-auction-crowd.jpg",
+    alt: "Bidders gathered under a shed at a live auction",
+    caption: "Live auction, NamPower. Onsite bidding.",
+  },
+  {
+    name: "Online auctions",
+    body: "A web-based online auction sale, used to dispose of specialised equipment that requires a wider range of prospective clientele.",
+    photo: "/images/sale-3d-render.jpg",
+    alt: "Gold sale graphic representing online auction sales",
+    caption: "Web-based sales for specialised assets.",
+  },
+  {
+    name: "Private treaty",
+    body: "The preferred sales method for specialised assets. We negotiate with a selected group of buyers on your behalf, to a predetermined end date.",
+    photo: "/images/gavel-stock.jpg",
+    alt: "Auction gavel resting on a block",
+    caption: "Negotiated sales to selected buyers.",
+  },
+];
+
 export default function HomePage() {
   return (
     <>
@@ -43,7 +74,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
 
-      {/* Hero: the eagle portrait carries the fold. Text sits low and left. */}
+      {/* Hero: the eagle portrait carries the fold. */}
       <section className="relative" aria-label="Introduction">
         <div id="hero-sentinel" aria-hidden="true" className="absolute top-0 h-px w-full" />
         <div className="relative flex min-h-[94dvh] items-end">
@@ -59,32 +90,39 @@ export default function HomePage() {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_right,oklch(21%_0.012_80/0.88)_0%,oklch(21%_0.012_80/0.55)_42%,oklch(21%_0.012_80/0.15)_100%)] max-md:bg-[linear-gradient(to_top,oklch(21%_0.012_80/0.92)_0%,oklch(21%_0.012_80/0.4)_55%,oklch(21%_0.012_80/0.25)_100%)]"
+            className="absolute inset-0 bg-[linear-gradient(to_right,oklch(18%_0.012_80/0.88)_0%,oklch(18%_0.012_80/0.55)_42%,oklch(18%_0.012_80/0.15)_100%)] max-md:bg-[linear-gradient(to_top,oklch(18%_0.012_80/0.92)_0%,oklch(18%_0.012_80/0.4)_55%,oklch(18%_0.012_80/0.25)_100%)]"
           />
           <div className="shell relative pb-20 pt-40 md:pb-28">
-            <h1
-              className="reveal max-w-[11ch] text-[clamp(2.9rem,6.5vw_+_0.5rem,5.5rem)] font-medium leading-[1.04] text-[var(--photo-ink)]"
+            <p
+              className="reveal label-caps photo-text opacity-80"
               style={{ "--i": 0 } as React.CSSProperties}
+            >
+              Windhoek, Namibia · Since 2013
+            </p>
+            <h1
+              className="reveal mt-5 max-w-[11ch] text-[clamp(2.9rem,6.5vw_+_0.5rem,5.5rem)] font-extrabold leading-[1.08] tracking-[-0.035em] photo-text"
+              style={{ "--i": 1 } as React.CSSProperties}
             >
               We add value to your assets.
             </h1>
             <p
-              className="reveal measure mt-6 max-w-[38ch] text-[1.1rem] leading-relaxed text-[var(--photo-ink)] opacity-90"
-              style={{ "--i": 1 } as React.CSSProperties}
-            >
-              Live auctions, sworn valuation and private sales across all
-              fourteen regions of Namibia. Windhoek, since 2013.
-            </p>
-            <div
-              className="reveal mt-10 flex flex-wrap items-center gap-7"
+              className="reveal measure mt-7 max-w-[40ch] text-[1.12rem] leading-relaxed photo-text opacity-90"
               style={{ "--i": 2 } as React.CSSProperties}
             >
-              <a href={site.whatsapp} className="btn-outline on-photo">
+              Live auctions, sworn valuation and private sales across all
+              fourteen regions of Namibia.
+            </p>
+            <div
+              className="reveal mt-10 flex flex-wrap items-center gap-6"
+              style={{ "--i": 3 } as React.CSSProperties}
+            >
+              <a href={site.whatsapp} className="btn on-dark">
                 Request an appraisal
+                <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
               </a>
               <Link
                 href="/services"
-                className="link-type on-photo text-[0.95rem] font-medium opacity-75"
+                className="btn-outline on-photo !px-5 !py-2.5 text-[0.85rem]"
               >
                 Explore services
               </Link>
@@ -93,214 +131,157 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Intro statement and the record, in numbers taken from the profile. */}
-      <section className="section" aria-label="Who we are">
-        <div className="shell grid gap-14 md:grid-cols-[1.35fr_1fr] md:gap-20">
-          <div>
-            <h2 className="max-w-[16ch] text-[clamp(1.9rem,3.5vw,3rem)]">
-              Auctioneers to Namibia&rsquo;s institutions.
-            </h2>
-            <p className="measure mt-7 text-muted">
-              Fix Eagle Investments Auctioneers is an exclusively Namibian owned
-              auction house, established in Windhoek in 2013. We plan,
-              coordinate and execute live auctions, provide court-appointed
-              sworn valuation, and manage private sales for government,
-              corporate and private clients.
-            </p>
-            <p className="measure mt-5 text-muted">
-              The business is managed by {site.principal.name}, a former
-              corporate banker of seventeen years, a qualified auctioneer and a
-              sworn appraiser admitted to the Magistrate Court of Namibia.
-            </p>
-          </div>
-          <dl className="tnum grid grid-cols-2 gap-x-8 gap-y-10 self-end pb-2 sm:grid-cols-3 md:grid-cols-2">
-            {stats.map((stat) => (
-              <div key={stat.label}>
-                <dt className="sr-only">{stat.label}</dt>
-                <dd className="font-serif text-[2.4rem] font-medium leading-none">
-                  {stat.value}
-                </dd>
-                <dd className="caption mt-2">{stat.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+      {/* The record, in numbers taken from the profile. */}
+      <section className="hair-t hair-b" aria-label="The record">
+        <dl className="shell tnum grid grid-cols-2 gap-x-8 gap-y-10 py-14 sm:grid-cols-3 lg:grid-cols-5">
+          {stats.map((stat) => (
+            <div key={stat.label}>
+              <dt className="sr-only">{stat.label}</dt>
+              <dd className="text-[2.5rem] font-bold leading-none tracking-[-0.02em]">
+                {stat.value}
+              </dd>
+              <dd className="caption mt-2">{stat.label}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
-      {/* Services index, the auction catalogue register. */}
-      <section className="section hair-t" aria-label="Services">
+      {/* Services: the catalogue register as tiles. */}
+      <section className="section" aria-label="Services">
         <div className="shell">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">What we do</h2>
-          <ul className="mt-14 grid gap-x-16 md:grid-cols-2">
-            {services.map((service) => (
-              <li key={service.id} className="hair-b">
-                <Link
-                  href={`/services#${service.id}`}
-                  className="group flex items-baseline justify-between gap-6 py-7"
-                >
-                  <span>
-                    <span className="font-serif text-[1.65rem] font-medium leading-tight transition-colors duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-accent-deep">
-                      {service.name}
-                    </span>
-                    <span className="mt-2 block max-w-[42ch] text-[0.95rem] text-muted">
-                      {service.summary}
-                    </span>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">What we do</h2>
+            <Link href="/services" className="link-type text-[0.95rem]">
+              All services
+              <ArrowRight
+                className="ml-1 inline h-4 w-4"
+                strokeWidth={1.75}
+                aria-hidden
+              />
+            </Link>
+          </div>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {services.map((service, i) => (
+              <li key={service.id}>
+                <Link href={`/services#${service.id}`} className="service-tile">
+                  <span className="tile-num">
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  <ArrowRight
-                    className="h-5 w-5 flex-none translate-x-0 opacity-0 transition-all duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1 group-hover:opacity-100 max-md:hidden"
-                    strokeWidth={1.5}
-                    aria-hidden
-                  />
+                  <span className="tile-name">{service.name}</span>
+                  <span className="tile-desc line-clamp-3">
+                    {service.summary}
+                  </span>
                 </Link>
               </li>
             ))}
+            <li>
+              <a href={site.whatsapp} className="service-tile group">
+                <span className="tile-num">08</span>
+                <span className="tile-name">Something else?</span>
+                <span className="tile-desc">
+                  If it is a moveable asset, talk to us about disposing of it.
+                </span>
+                <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-[0.85rem] font-semibold text-accent-deep">
+                  Start a conversation
+                  <ArrowRight
+                    className="h-3.5 w-3.5 transition-transform duration-[220ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1"
+                    strokeWidth={2}
+                    aria-hidden
+                  />
+                </span>
+              </a>
+            </li>
           </ul>
         </div>
       </section>
 
-      {/* Photographic fold: the live auction. The photograph is the section. */}
-      <section aria-label="Live auction" className="relative">
-        <PhotoFigure
-          src="/images/live-auction-crowd.jpg"
-          alt="Bidders gathered under a shed at a live auction"
-          sizes="(min-width: 90rem) 1440px, 100vw"
-          ratio="aspect-[16/10] max-md:aspect-[4/3]"
-          className="w-full"
-        />
-        <p className="shell-wide caption mt-3">
-          Live auction, NamPower. Onsite bidding, planned and coordinated for
-          full attendance.
-        </p>
-      </section>
-
-      {/* Three ways to sell. */}
-      <section className="section" aria-label="Ways to sell">
+      {/* Three ways to sell, as tabs. */}
+      <section className="section hair-t" aria-label="Ways to sell">
         <div className="shell">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">Three ways to sell</h2>
-          <dl className="mt-12">
-            {saleChannels.map((channel) => (
-              <div
-                key={channel.name}
-                className="hair-b grid gap-3 py-8 md:grid-cols-[15rem_1fr] md:gap-12"
-              >
-                <dt className="font-serif text-[1.55rem] font-medium">
-                  {channel.name}
-                </dt>
-                <dd className="measure text-muted">{channel.body}</dd>
-              </div>
-            ))}
-          </dl>
+          <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">Three ways to sell</h2>
+          <div className="mt-10">
+            <ChannelTabs channels={channels} />
+          </div>
         </div>
       </section>
 
-      {/* Selected work: two commissions, alternating. */}
+      {/* Selected work, as a carousel. */}
       <section className="section hair-t" aria-label="Selected work">
-        <div className="shell">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">Selected work</h2>
-
-          <div className="mt-14 grid items-center gap-10 md:mt-20 md:grid-cols-2 md:gap-16">
-            <PhotoFigure
-              src="/images/case-study-filing-cabinets.jpg"
-              alt="Office furniture and filing cabinets lined up for disposal at a NamWater auction"
-              ratio="aspect-[4/3]"
-              caption="Office furniture disposal, NamWater."
-            />
-            <div>
-              <p className="caption tnum">2018 to 2021, 2022 to 2025</p>
-              <h3 className="mt-3 text-[clamp(1.7rem,2.8vw,2.4rem)]">
-                Namibia Water Corporation
-              </h3>
-              <p className="measure mt-5 text-muted">
-                Six live auctions under two consecutive three-year contracts.
-                All moveable assets: over 500 vehicles, earthmoving and
-                specialised equipment, scrap metal, household and office
-                furniture. Complete sell-out, sales targets exceeded on every
-                auction.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-16 grid items-center gap-10 md:mt-24 md:grid-cols-2 md:gap-16">
-            <div className="md:order-2">
-              <PhotoFigure
-                src="/images/namibia-power-loco.jpg"
-                alt="Yellow rail locomotive offered at a NamPower auction"
-                ratio="aspect-[4/3]"
-                caption="Rail locomotive, NamPower auction, September 2025."
-              />
-            </div>
-            <div className="md:order-1">
-              <p className="caption tnum">2019 to 2025</p>
-              <h3 className="mt-3 text-[clamp(1.7rem,2.8vw,2.4rem)]">
-                Namibia Power Corporation
-              </h3>
-              <p className="measure mt-5 text-muted">
-                More than twenty public live auctions conducted countrywide,
-                each sold out. Vehicle fleet, earthmoving equipment, loose
-                goods, building material and scrap steel, under contract from
-                2021 with an extension to August 2025.
-              </p>
-            </div>
-          </div>
-
-          <p className="mt-16">
+        <div className="shell-wide">
+          <div className="shell-wide flex flex-wrap items-end justify-between gap-6 px-[var(--gutter)]">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">Selected work</h2>
             <Link href="/case-studies" className="link-type text-[0.95rem]">
               All trade references
             </Link>
-          </p>
+          </div>
+          <div className="shell-wide mt-10 px-[var(--gutter)]">
+            <PhotoCarousel items={featuredWork} />
+          </div>
         </div>
       </section>
 
-      {/* The six-step process, lot-number register. */}
+      {/* The six-step process, compact register. */}
       <section className="section hair-t" aria-label="Sales process">
         <div className="shell">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">
-            How an auction runs
-          </h2>
-          <ol className="mt-14 grid gap-x-16 md:grid-cols-2">
-            {processSteps.map((step, i) => (
-              <li key={step.name} className="hair-b flex gap-6 py-7">
-                <span className="label-caps tnum pt-2 text-accent-deep">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span>
-                  <h3 className="text-[1.45rem] font-medium">{step.name}</h3>
-                  <p className="mt-2 max-w-[44ch] text-[0.95rem] text-muted">
-                    {step.body}
-                  </p>
-                </span>
-              </li>
-            ))}
-          </ol>
-          <p className="mt-10">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
+              How an auction runs
+            </h2>
             <Link href="/process" className="link-type text-[0.95rem]">
               The process in full
             </Link>
-          </p>
+          </div>
+          <ol className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {processSteps.map((step, i) => (
+              <li
+                key={step.name}
+                className="rounded-[var(--r-card)] border border-rule-2 bg-paper-2 p-6"
+              >
+                <span className="label-caps tnum text-accent-deep">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="mt-3 text-[1.2rem]">{step.name}</h3>
+                <p className="mt-2 text-[0.9rem] leading-relaxed text-soft line-clamp-3">
+                  {step.body}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* Who we are, with the principal at his graduation. */}
+      {/* Who we are, in brief. */}
       <section className="section hair-t" aria-label="About">
         <div className="shell grid items-center gap-12 md:grid-cols-[1fr_1.15fr] md:gap-20">
-          <PhotoFigure
-            src="/images/graduation-ceremony.jpg"
-            alt="Niklaas Kisilipile at his graduation ceremony"
-            ratio="aspect-[4/3]"
-            caption="Graduation ceremony, SA College of Auctioneering, Kempton Park, December 2017."
-          />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--r-card)]">
+            <Image
+              src="/images/graduation-ceremony.jpg"
+              alt="Niklaas Kisilipile at his graduation ceremony"
+              fill
+              sizes="(min-width: 48rem) 45vw, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div>
-            <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">Who we are</h2>
-            <p className="measure mt-7 text-muted">{site.principal.bio}</p>
-            <ul className="mt-8">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">Who we are</h2>
+            <p className="measure mt-6 text-soft">
+              An exclusively Namibian owned auction house, run by{" "}
+              {site.principal.name}: former corporate banker, qualified
+              auctioneer, sworn appraiser admitted to the Magistrate Court of
+              Namibia.
+            </p>
+            <ul className="mt-8 flex flex-wrap gap-2.5">
               {[
-                "Registered with the Ministry of Industrialisation and SME Development, BIPA",
-                "Qualified auctioneer, South African College of Auctioneering, 2017",
-                "Sworn appraiser, Magistrate Court of Namibia, 2018",
-                "Certified by the office of the Inspector General to sell second-hand goods, 2018",
-              ].map((item) => (
-                <li key={item} className="hair-b py-4 text-[0.95rem] text-muted">
-                  {item}
+                "Est. 2013",
+                "BIPA registered",
+                "Sworn appraiser",
+                "Scrap certified",
+              ].map((chip) => (
+                <li
+                  key={chip}
+                  className="rounded-[var(--r-pill)] border border-rule bg-paper-2 px-4 py-1.5 text-[0.82rem] font-medium text-ink-2"
+                >
+                  {chip}
                 </li>
               ))}
             </ul>
@@ -309,11 +290,37 @@ export default function HomePage() {
                 About Fix Eagle
                 <ArrowUpRight
                   className="ml-1 inline h-4 w-4"
-                  strokeWidth={1.5}
+                  strokeWidth={1.75}
                   aria-hidden
                 />
               </Link>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Closing band: the brand statement over charcoal. */}
+      <section className="section" aria-label="Closing">
+        <div className="shell">
+          <div className="rounded-[var(--r-card)] bg-ink px-6 py-16 text-center text-paper md:px-16 md:py-20">
+            <p className="mx-auto max-w-[18ch] text-[clamp(1.9rem,4vw,3rem)] font-bold leading-[1.08] tracking-[-0.022em]">
+              With us you can go so much further.
+            </p>
+            <p className="mx-auto mt-4 max-w-[44ch] text-[1rem] leading-relaxed opacity-75">
+              Tell us what you need to sell. We will tell you what it is worth
+              and how we would sell it.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center justify-center gap-5">
+              <a href={site.whatsapp} className="btn on-dark">
+                WhatsApp {site.phoneDisplay}
+              </a>
+              <Link
+                href="/contact"
+                className="link-type on-photo text-[0.95rem] font-medium"
+              >
+                Or use the contact form
+              </Link>
+            </div>
           </div>
         </div>
       </section>

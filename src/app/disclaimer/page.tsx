@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BrownPage } from "@/components/site/brown-page";
 import { PageHero } from "@/components/site/page-hero";
 import { site } from "@/lib/site";
 
@@ -39,30 +40,32 @@ const sections = [
 
 export default function DisclaimerPage() {
   return (
-    <>
-      <PageHero title="Disclaimer">
-        What a valuation is, and what it is not. Stated plainly, because our
-        opinions carry weight in court and in contract.
-      </PageHero>
-      <section className="shell pb-28">
-        {sections.map((section) => (
-          <div key={section.h} className="hair-t grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-14">
-            <h2 className="text-[1.35rem] font-medium">{section.h}</h2>
-            <div className="measure space-y-4 text-muted">
-              {section.body.map((p, i) => (
-                <p key={i}>{p}</p>
-              ))}
+    <BrownPage>
+      <>
+        <PageHero title="Disclaimer">
+          What a valuation is, and what it is not. Stated plainly, because our
+          opinions carry weight in court and in contract.
+        </PageHero>
+        <section className="shell pb-28">
+          {sections.map((section) => (
+            <div key={section.h} className="hair-t grid gap-4 py-10 md:grid-cols-[14rem_1fr] md:gap-14">
+              <h2 className="text-[1.35rem] font-semibold">{section.h}</h2>
+              <div className="measure space-y-4 text-soft">
+                {section.body.map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
             </div>
+          ))}
+          <div className="hair-t pt-6 text-[0.85rem] text-soft">
+            Questions about any of this? Write to{" "}
+            <a href={`mailto:${site.email}`} className="link-type">
+              {site.email}
+            </a>
+            .
           </div>
-        ))}
-        <div className="hair-t pt-6 text-[0.85rem] text-muted">
-          Questions about any of this? Write to{" "}
-          <a href={`mailto:${site.email}`} className="link-type">
-            {site.email}
-          </a>
-          .
-        </div>
-      </section>
-    </>
+        </section>
+      </>
+    </BrownPage>
   );
 }

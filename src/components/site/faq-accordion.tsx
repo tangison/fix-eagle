@@ -21,7 +21,7 @@ export function FaqAccordion({
         >
           <AccordionPrimitive.Header>
             <AccordionPrimitive.Trigger className="faq-trigger">
-              <span className="font-serif text-[1.35rem] font-medium leading-snug md:text-[1.5rem]">
+              <span className="text-[1.25rem] font-semibold leading-snug tracking-[-0.01em] md:text-[1.4rem]">
                 {item.q}
               </span>
               <span className="faq-sign" aria-hidden>
@@ -30,7 +30,7 @@ export function FaqAccordion({
             </AccordionPrimitive.Trigger>
           </AccordionPrimitive.Header>
           <AccordionPrimitive.Content className="faq-content">
-            <p className="measure pb-7 text-muted">{item.a}</p>
+            <p className="measure pb-7 text-soft">{item.a}</p>
           </AccordionPrimitive.Content>
         </AccordionPrimitive.Item>
       ))}

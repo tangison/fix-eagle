@@ -29,11 +29,11 @@ const pillars = [
   },
   {
     name: "Sales achievements",
-    body: "Over one hundred auction sales completed since 2013, every one of them concluded. A 97 percent sales achievement, exceeding the targets of most clients.",
+    body: "Over one hundred auction sales completed since 2013, every one of them concluded. A 97 percent sales achievement.",
   },
   {
     name: "Supporting local empowerment",
-    body: "Our business mirrors the transfer of skills. More than fifty casuals have been trained through our regional auctions, with financial and skills compensation.",
+    body: "More than fifty casuals trained through our regional auctions, with financial and skills compensation.",
   },
   {
     name: "Adaptation to industry standards",
@@ -45,11 +45,9 @@ export default function AboutPage() {
   return (
     <>
       <PageHero title="An exclusively Namibian auction house">
-        Fix Eagle Investments CC, trading as Fix Eagle Investments
-        Auctioneers, was established, registered and founded in Windhoek in
-        2013. Exclusively Namibian owned, the business has spent more than a
-        decade perfecting its services: auctioneering, sales, appraisal and
-        valuation.
+        Established, registered and founded in Windhoek in 2013, trading as
+        Fix Eagle Investments Auctioneers: more than a decade of auctioneering,
+        sales, appraisal and valuation.
       </PageHero>
 
       <section className="shell" aria-label="The record">
@@ -57,7 +55,7 @@ export default function AboutPage() {
           {stats.map((stat) => (
             <div key={stat.label}>
               <dt className="sr-only">{stat.label}</dt>
-              <dd className="font-serif text-[2.2rem] font-medium leading-none">
+              <dd className="text-[2.3rem] font-bold leading-none tracking-[-0.02em]">
                 {stat.value}
               </dd>
               <dd className="caption mt-2">{stat.label}</dd>
@@ -69,13 +67,26 @@ export default function AboutPage() {
       <section className="section hair-t" aria-label="The principal">
         <div className="shell grid items-start gap-12 md:grid-cols-[1fr_1.2fr] md:gap-20">
           <div>
-            <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
               {site.principal.name}
             </h2>
-            <p className="label-caps mt-3 text-muted">
-              {site.principal.role}
-            </p>
-            <p className="measure mt-7 text-muted">{site.principal.bio}</p>
+            <p className="label-caps mt-3 text-soft">{site.principal.role}</p>
+            <p className="measure mt-7 text-soft">{site.principal.bio}</p>
+            <ul className="mt-8 flex flex-wrap gap-2.5">
+              {[
+                "BIPA registered",
+                "Qualified auctioneer, 2017",
+                "Sworn appraiser, 2018",
+                "Scrap certified, 2018",
+              ].map((chip) => (
+                <li
+                  key={chip}
+                  className="rounded-[var(--r-pill)] border border-rule bg-paper-2 px-4 py-1.5 text-[0.82rem] font-medium text-ink-2"
+                >
+                  {chip}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="space-y-10">
             <PhotoFigure
@@ -94,38 +105,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section hair-t" aria-label="Professional set-up">
-        <div className="shell grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">
-            Professional set-up
-          </h2>
-          <ul>
-            {[
-              "Registered company with the Ministry of Industrialisation and SME Development, BIPA",
-              "Qualified auctioneer, registered with the South African College of Auctioneering, 2017",
-              "Sworn appraiser, admitted to the Magistrate Court of Namibia to appraise all categories of moveable assets, 2018",
-              "Certified by the office of the Inspector General, Ministry of Safety and Security, to sell second-hand goods, 2018",
-            ].map((item) => (
-              <li key={item} className="hair-b py-6 text-muted">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="section hair-t" aria-label="Value proposition">
+      <section className="section hair-t" aria-label="What we stand on">
         <div className="shell">
-          <h2 className="text-[clamp(1.9rem,3.5vw,3rem)]">
-            What we stand on
-          </h2>
-          <dl className="mt-12 grid gap-x-16 md:grid-cols-2">
+          <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">What we stand on</h2>
+          <dl className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {pillars.map((pillar) => (
-              <div key={pillar.name} className="hair-b py-8">
-                <dt className="font-serif text-[1.5rem] font-medium">
+              <div
+                key={pillar.name}
+                className="rounded-[var(--r-card)] border border-rule-2 bg-paper-2 p-6"
+              >
+                <dt className="text-[1.15rem] font-semibold tracking-[-0.01em] text-ink-2">
                   {pillar.name}
                 </dt>
-                <dd className="measure mt-3 text-[0.95rem] text-muted">
+                <dd className="mt-2.5 text-[0.9rem] leading-relaxed text-soft">
                   {pillar.body}
                 </dd>
               </div>

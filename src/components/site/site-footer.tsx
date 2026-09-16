@@ -7,7 +7,7 @@ export function SiteFooter() {
     <footer className="hair-t mt-auto bg-paper">
       <div className="shell py-20 md:py-24">
         <p className="foot-statement">{site.closingLine}</p>
-        <p className="measure mt-6 text-muted">
+        <p className="measure mt-6 text-soft">
           We add value to our clients, through dedicated service delivery.
         </p>
 
@@ -25,11 +25,11 @@ export function SiteFooter() {
               className="h-[2.1rem] w-auto"
             />
             <span className="flex flex-col leading-none">
-              <span className="font-serif text-[1.05rem] font-semibold tracking-[0.02em]">
+              <span className="text-[0.95rem] font-bold tracking-[0.015em]">
                 FIX EAGLE
               </span>
-              <span className="label-caps mt-[2px] text-[0.5rem] tracking-[0.24em] text-muted">
-                Investments Auctioneers
+              <span className="label-caps mt-[3px] text-[0.5rem] tracking-[0.3em] text-soft">
+                Auctioneers
               </span>
             </span>
           </Link>
@@ -53,7 +53,7 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <address className="not-italic text-[0.92rem] leading-relaxed text-muted md:text-right">
+          <address className="not-italic text-[0.92rem] leading-relaxed text-soft md:text-right">
             <a href={`mailto:${site.email}`} className="link-type">
               {site.email}
             </a>
@@ -66,7 +66,7 @@ export function SiteFooter() {
           </address>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-rule-2 pt-6 text-[0.8rem] text-muted md:flex-row md:items-center md:justify-between">
+        <div className="mt-12 flex flex-col gap-4 border-t border-rule-2 pt-6 text-[0.8rem] text-soft md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.legalName}. All rights reserved.
           </p>

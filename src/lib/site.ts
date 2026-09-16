@@ -310,3 +310,92 @@ export const navLinks = [
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ] as const;
+
+/** Desktop nav: the Services item opens a mega dropdown built from the
+ * services register; Company groups the remaining informational pages. */
+export const navGroups = [
+  {
+    label: "Services",
+    kind: "mega" as const,
+    items: services.map((s) => ({
+      href: `/services#${s.id}`,
+      name: s.name,
+      desc: s.summary,
+    })),
+  },
+  { href: "/process", label: "Process", kind: "link" as const },
+  { href: "/case-studies", label: "Case studies", kind: "link" as const },
+  {
+    label: "Company",
+    kind: "mega" as const,
+    items: [
+      { href: "/about", name: "About", desc: "The house, the principal, the record." },
+      { href: "/faq", name: "FAQ", desc: "How selling through Fix Eagle works." },
+      { href: "/brand", name: "Brand", desc: "Logos, colors and usage." },
+    ],
+  },
+  { href: "/contact", label: "Contact", kind: "link" as const },
+] as const;
+
+/** Featured commissions: drives the home carousel and the menu overlay
+ * featured column. Photos and facts from the case study register. */
+export const featuredWork = [
+  {
+    entity: "NamPower",
+    line: "Twenty-plus public live auctions, every one sold out, 2021 to 2025.",
+    photo: "/images/namibia-power-loco.jpg",
+    alt: "Yellow rail locomotive offered at a NamPower auction",
+    period: "2021 to 2025",
+  },
+  {
+    entity: "NamWater",
+    line: "Over 500 vehicles, earthmoving equipment and scrap metal, sold under two three-year contracts.",
+    photo: "/images/case-study-front-loader.jpg",
+    alt: "Front loader earthmoving equipment lined up for a NamWater auction",
+    period: "2018 to 2025",
+  },
+  {
+    entity: "Hollard Insurance",
+    line: "Storage and auctioning of vehicles, all executed and sold over the contract period.",
+    photo: "/images/case-study-toyota-hilux.jpg",
+    alt: "Toyota Hilux offered at a vehicle fleet disposal auction",
+    period: "2020 to 2024",
+  },
+  {
+    entity: "NamPower, loose goods",
+    line: "Loose goods and building material, training centre auction yard.",
+    photo: "/images/loose-goods-auction-yard.jpg",
+    alt: "Loose goods laid out in an auction yard at the NamPower training centre",
+    period: "October 2025",
+  },
+  {
+    entity: "NamWater, office furniture",
+    line: "Office furniture and filing cabinets, appraisal and auctioning.",
+    photo: "/images/case-study-filing-cabinets.jpg",
+    alt: "Office furniture and filing cabinets lined up for disposal",
+    period: "2022 to 2025",
+  },
+] as const;
+
+/** Case study filter sectors for the reference register. */
+export const sectors = [
+  "All sectors",
+  "State-owned enterprises",
+  "Banks and insurers",
+  "Government and embassies",
+  "Law firms",
+  "Private clients",
+] as const;
+
+export const sectorOf: Record<string, (typeof sectors)[number]> = {
+  "Hollard Insurance Namibia": "Banks and insurers",
+  "Namibia Water Corporation (NamWater)": "State-owned enterprises",
+  "Road Contractors Company (RCC)": "State-owned enterprises",
+  "French Embassy in Namibia": "Government and embassies",
+  "Whale Cheetah Cement": "Private clients",
+  "Namibia Power Corporation (NamPower)": "State-owned enterprises",
+  "Namibia Wildlife Resorts (NWR)": "State-owned enterprises",
+  "Development Bank of Namibia (DBN)": "Banks and insurers",
+  "Law firms of Namibia": "Law firms",
+  "Private sales and private clients": "Private clients",
+};

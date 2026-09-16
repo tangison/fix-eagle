@@ -10,13 +10,14 @@
   --color-paper-3: var(--paper-3);
   --color-ink: var(--ink);
   --color-ink-2: var(--ink-2);
-  --color-muted: var(--muted);
   --color-rule: var(--rule);
   --color-rule-2: var(--rule-2);
+  --color-soft: var(--muted);
   --color-accent: var(--accent);
   --color-accent-deep: var(--accent-deep);
   --color-accent-ink: var(--accent-ink);
   --color-focus: var(--focus);
+  --color-orange: var(--orange);
 
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
@@ -40,51 +41,56 @@
   --color-input: var(--rule);
   --color-ring: var(--focus);
 
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
-  --radius-xl: 0px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 16px;
 }
 
 /* --------------------------------------------------------------------------
-   Base
+   Base. Layered so Tailwind utilities (later layers) can override.
    -------------------------------------------------------------------------- */
 
-html {
-  overflow-x: clip;
-  scroll-behavior: smooth;
-}
+@layer base {
+  html {
+    overflow-x: clip;
+    scroll-behavior: smooth;
+  }
 
-body {
-  overflow-x: clip;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-body);
-  font-size: 1.0625rem;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
+  body {
+    overflow-x: clip;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
 
-::selection {
-  background: var(--accent);
-  color: var(--accent-ink);
-}
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-ink);
+  }
 
-/* Focus is instant, always visible, never animated in */
-:focus-visible {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
-}
+  /* Focus is instant, always visible, never animated in */
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
 
-h1, h2, h3, h4 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: -0.015em;
-  line-height: 1.08;
-  overflow-wrap: anywhere;
-  min-width: 0;
-  text-wrap: balance;
+  /* Headings: the brand grotesque, Target-weight. Slate-navy on light
+     pages, brand gold on brown pages, both carried by --ink-2. */
+  h1, h2, h3, h4 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    line-height: 1.1;
+    color: var(--ink-2);
+    overflow-wrap: anywhere;
+    min-width: 0;
+    text-wrap: balance;
+  }
 }
 
 /* Reduced motion: spatial motion collapses to opacity crossfade */
@@ -131,13 +137,13 @@ h1, h2, h3, h4 {
    Typography utilities
    -------------------------------------------------------------------------- */
 
-/* Small caps label. Used for nav links, captions and metadata only. */
+/* Small caps label: nav, captions, metadata. */
 .label-caps {
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.72rem;
+  font-weight: 600;
+  font-size: 0.76rem;
   line-height: 1.4;
-  letter-spacing: 0.13em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
 }
 
@@ -145,9 +151,9 @@ h1, h2, h3, h4 {
 .caption {
   font-family: var(--font-body);
   font-weight: 400;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   line-height: 1.5;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--muted);
 }
 
@@ -159,7 +165,7 @@ h1, h2, h3, h4 {
    Links and buttons
    -------------------------------------------------------------------------- */
 
-/* Typographic link with a drawing underline (C3) */
+/* Typographic link with a drawing underline */
 .link-type {
   color: var(--accent-deep);
   text-decoration: none;
@@ -180,18 +186,60 @@ h1, h2, h3, h4 {
   color: var(--photo-ink);
 }
 
-/* Outlined chip (C1), sharp corners, print register */
+/* Fixed color registers for arbitrary contexts. Real classes, not
+   arbitrary-value utilities: Tailwind cannot infer that a var() holds a
+   color, so text-[var(--x)] silently fails next to a text-[length]. */
+.photo-text { color: var(--photo-ink); }
+.menu-text { color: var(--menu-ink); }
+.menu-text-muted { color: var(--menu-muted); }
+
+/* Pill actions, Target register. Solid charcoal on light pages, solid
+   gold wherever the fill must carry the brand. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  border-radius: var(--r-pill);
+  padding: 0.95rem 1.7rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  color: var(--paper);
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    transform 100ms var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
+}
+.btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 6px 18px -8px oklch(50% 0.08 85 / 0.55);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+
+/* Outlined pill, secondary register */
 .btn-outline {
   display: inline-flex;
   align-items: center;
   gap: var(--space-sm);
+  border-radius: var(--r-pill);
   border: 1px solid currentColor;
-  padding: 0.8rem 1.4rem;
+  padding: 0.9rem 1.6rem;
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.86rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
   color: var(--ink);
   background: transparent;
   cursor: pointer;
@@ -207,6 +255,18 @@ h1, h2, h3, h4 {
 }
 .btn-outline:active {
   transform: translateY(1px);
+}
+
+/* Gold fill on dark surfaces: menu overlay, brown pages, charcoal bands */
+.btn.on-dark {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.btn.on-dark:hover {
+  background: #DDBA7C;
+  border-color: #DDBA7C;
+  color: var(--accent-ink);
 }
 
 /* Light-on-photo variant */
@@ -227,6 +287,7 @@ h1, h2, h3, h4 {
   background: var(--ink);
   color: var(--paper);
   padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--r-pill);
   transition: top var(--dur-short) var(--ease-out);
 }
 .skip-link:focus {
@@ -284,21 +345,450 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
-/* --------------------------------------------------------------------------
-   Footer statement (Ft5)
-   -------------------------------------------------------------------------- */
+/* On brown pages the solid header joins the brown ground */
+body:has(.theme-brown) .site-header.is-solid {
+  background: var(--paper);
+  border-bottom-color: var(--rule);
+}
 
-.foot-statement {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.9rem, 4.5vw, 3.4rem);
-  line-height: 1.1;
-  letter-spacing: -0.015em;
-  max-width: 24ch;
+/* Nav trigger: the label plus a chevron that rolls on open */
+.nav-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: inherit;
+  cursor: pointer;
+}
+.nav-trigger .nav-chev {
+  transition: transform var(--dur-short) var(--ease-out);
+}
+.nav-trigger[aria-expanded="true"] .nav-chev {
+  transform: rotate(180deg);
+}
+.nav-trigger[aria-expanded="true"] {
+  color: var(--accent-deep);
+}
+
+/* Mega dropdown panel: brand white card, hairline, soft lift, and a
+   two-pixel gold register across the top. */
+.mega-panel {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  min-width: 34rem;
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  box-shadow:
+    0 1px 2px oklch(20% 0.01 80 / 0.05),
+    0 18px 44px -14px oklch(20% 0.01 80 / 0.22);
+  padding: var(--space-xl) var(--space-xl) var(--space-lg);
+  color: var(--ink);
+  animation: mega-in 200ms var(--ease-out);
+}
+.mega-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: var(--space-lg);
+  width: 2.5rem;
+  height: 2px;
+  background: var(--accent);
+  border-radius: var(--r-pill);
+}
+@keyframes mega-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.mega-item {
+  display: flex;
+  gap: var(--space-md);
+  align-items: flex-start;
+  border-radius: var(--r-input);
+  padding: 0.85rem 1rem;
+  color: var(--ink);
+  transition: background-color var(--dur-micro) var(--ease-out);
+}
+.mega-item:hover,
+.mega-item:focus-visible {
+  background: var(--paper-2);
+}
+.mega-item .mega-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--accent-deep);
+  padding-top: 0.24rem;
+}
+.mega-item .mega-name {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--ink-2);
+}
+.mega-item .mega-desc {
+  display: block;
+  margin-top: 0.22rem;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* The hamburger: Collins register, two lines that collapse to a cross */
+.menu-toggle {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  width: 2.6rem;
+  height: 2.6rem;
+  padding: 0 0.5rem;
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+.menu-toggle:hover {
+  background: oklch(50% 0.02 80 / 0.1);
+}
+.site-header.on-photo .menu-toggle:hover {
+  background: oklch(96% 0.01 90 / 0.16);
+}
+.menu-toggle .menu-line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: var(--r-pill);
+  background: currentColor;
+  transition:
+    transform var(--dur-short) var(--ease-out),
+    opacity var(--dur-short) var(--ease-out),
+    width var(--dur-short) var(--ease-out);
+}
+.menu-toggle .menu-line:first-child { width: 70%; }
+.menu-toggle[aria-expanded="true"] .menu-line:first-child {
+  width: 100%;
+  transform: translateY(4.5px) rotate(45deg);
+}
+.menu-toggle[aria-expanded="true"] .menu-line:last-child {
+  transform: translateY(-4.5px) rotate(-45deg);
 }
 
 /* --------------------------------------------------------------------------
-   FAQ accordion (Radix), hairline register, no boxes
+   Menu overlay (Collins register): full-screen warm black, huge links,
+   featured column, pill CTA, contact footer row.
+   -------------------------------------------------------------------------- */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--menu-bg);
+  color: var(--menu-ink);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.menu-link {
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: clamp(2.2rem, 8.5vw, 5rem);
+  line-height: 1.06;
+  letter-spacing: -0.024em;
+  color: var(--menu-ink);
+  text-decoration: none;
+  opacity: 0;
+  animation: menu-link-in 480ms var(--ease-out) forwards;
+  animation-delay: calc(140ms + var(--i, 0) * 60ms);
+  transition: color var(--dur-short) var(--ease-out);
+}
+.menu-link:hover,
+.menu-link:focus-visible {
+  color: var(--accent);
+}
+.menu-link .menu-index {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--menu-muted);
+  font-variant-numeric: tabular-nums;
+  transform: translateY(-0.6em);
+  opacity: 0;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.menu-link:hover .menu-index,
+.menu-link:focus-visible .menu-index {
+  opacity: 1;
+}
+@keyframes menu-link-in {
+  from { opacity: 0; transform: translateY(26px); }
+  to { opacity: 1; transform: none; }
+}
+
+.menu-utility {
+  font-size: 1rem;
+  color: var(--menu-muted);
+  text-decoration: none;
+  transition: color var(--dur-short) var(--ease-out);
+}
+.menu-utility:hover,
+.menu-utility:focus-visible {
+  color: var(--menu-ink);
+}
+
+.menu-feature {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border-radius: var(--r-card);
+  text-decoration: none;
+  color: var(--menu-ink);
+  opacity: 0;
+  animation: menu-link-in 480ms var(--ease-out) forwards;
+  animation-delay: calc(320ms + var(--i, 0) * 70ms);
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+.menu-feature:hover,
+.menu-feature:focus-visible {
+  background: oklch(96% 0.01 90 / 0.07);
+}
+.menu-feature .menu-feature-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--menu-muted);
+}
+.menu-feature .menu-feature-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Tabs (Target register): underline triggers, gold active bar
+   -------------------------------------------------------------------------- */
+
+.tab-list {
+  display: flex;
+  gap: clamp(1rem, 3vw, 2.25rem);
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0;
+}
+.tab-list::-webkit-scrollbar { display: none; }
+
+.tab-trigger {
+  position: relative;
+  padding: 0.9rem 0.1rem 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--dur-short) var(--ease-out);
+}
+.tab-trigger:hover {
+  color: var(--ink-2);
+}
+.tab-trigger[data-state="active"] {
+  color: var(--ink-2);
+  font-weight: 700;
+}
+.tab-trigger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -1px;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--accent);
+  transition: right var(--dur-short) var(--ease-out);
+}
+.tab-trigger[data-state="active"]::after {
+  right: 0;
+}
+
+.tab-panel:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+  border-radius: var(--r-input);
+}
+
+/* --------------------------------------------------------------------------
+   Carousel: photo cards, circular arrows, gold active dot
+   -------------------------------------------------------------------------- */
+
+.carousel-viewport {
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  gap: var(--space-lg);
+  touch-action: pan-y;
+}
+.carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+@media (min-width: 48rem) {
+  .carousel-slide { flex-basis: 50%; }
+}
+@media (min-width: 72rem) {
+  .carousel-slide { flex-basis: 33.3333%; }
+}
+
+.carousel-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 4px 14px -4px oklch(20% 0.01 80 / 0.18);
+  transition:
+    background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    opacity var(--dur-short) var(--ease-out),
+    transform 100ms var(--ease-out);
+}
+.carousel-arrow:hover:not(:disabled) {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.carousel-arrow:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.carousel-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.carousel-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: var(--r-pill);
+  background: var(--rule);
+  cursor: pointer;
+  transition:
+    width var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out);
+}
+.carousel-dot[data-active="true"] {
+  width: 30px;
+  background: var(--accent);
+}
+.carousel-dot:hover:not([data-active="true"]) {
+  background: var(--muted);
+}
+
+/* Case cards inside carousels and grids */
+.case-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule-2);
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
+}
+.case-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px -16px oklch(20% 0.01 80 / 0.25);
+  transform: translateY(-3px);
+}
+.case-card .case-entity {
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+.case-card .case-line {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* --------------------------------------------------------------------------
+   Service tiles (Target grid register)
+   -------------------------------------------------------------------------- */
+
+.service-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  border-radius: var(--r-card);
+  border: var(--rule-hair) solid var(--rule);
+  background: var(--paper);
+  padding: var(--space-lg);
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
+}
+.service-tile:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px -16px oklch(20% 0.01 80 / 0.22);
+  transform: translateY(-3px);
+}
+.service-tile .tile-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--accent-deep);
+}
+.service-tile .tile-name {
+  font-weight: 700;
+  font-size: 1.16rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+}
+.service-tile .tile-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   Footer statement
+   -------------------------------------------------------------------------- */
+
+.foot-statement {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4.5vw, 3.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  max-width: 24ch;
+  color: var(--ink-2);
+}
+
+/* --------------------------------------------------------------------------
+   FAQ accordion (Radix), hairline register
    -------------------------------------------------------------------------- */
 
 .faq-item {
@@ -323,7 +813,8 @@ h1, h2, h3, h4 {
   color: var(--accent-deep);
 }
 .faq-trigger .faq-sign {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 1.5rem;
   line-height: 1;
   flex: none;
@@ -351,15 +842,15 @@ h1, h2, h3, h4 {
 }
 
 /* --------------------------------------------------------------------------
-   Form fields, hairline register
+   Form fields
    -------------------------------------------------------------------------- */
 
 .field-label {
   display: block;
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--ink-2);
   margin-bottom: var(--space-sm);
@@ -370,12 +861,12 @@ h1, h2, h3, h4 {
   min-height: 3rem;
   background: transparent;
   border: 1px solid var(--rule);
+  border-radius: var(--r-input);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 1rem;
   padding: 0.75rem 1rem;
   transition: border-color var(--dur-short) var(--ease-out);
-  border-radius: 0;
 }
 .field-input:hover {
   border-color: var(--muted);
@@ -415,9 +906,9 @@ select.field-input {
 }
 .ref-table th {
   font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
   text-align: left;
@@ -428,9 +919,27 @@ select.field-input {
   padding: var(--space-lg) var(--space-md);
   border-bottom: var(--rule-hair) solid var(--rule-2);
   vertical-align: top;
-  color: var(--ink-2);
+  color: var(--ink);
 }
 .ref-table td:first-child {
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Brown page prose: the text-heavy register
+   -------------------------------------------------------------------------- */
+
+.theme-brown .prose-doc h2 {
+  color: var(--ink-2);
+  font-size: 1.35rem;
+  margin-top: var(--space-2xl);
+}
+.theme-brown .prose-doc p {
   color: var(--ink);
-  font-weight: 500;
+  opacity: 0.97;
+  max-width: 68ch;
+}
+.theme-brown .prose-doc p + p {
+  margin-top: var(--space-md);
 }

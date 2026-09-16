@@ -42,7 +42,7 @@ export default function FaqPage() {
 
       <section className="shell pb-28" aria-label="Frequently asked questions">
         <FaqAccordion items={faqs} />
-        <p className="mt-12 text-muted">
+        <p className="mt-12 text-soft">
           Still unsure?{" "}
           <a href={site.whatsapp} className="link-type">
             Ask on WhatsApp
