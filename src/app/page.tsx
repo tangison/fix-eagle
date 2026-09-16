@@ -53,7 +53,7 @@ export default function HomePage() {
             fill
             priority
             fetchPriority="high"
-            quality={88}
+            quality={82}
             sizes="(min-width: 90rem) 1440px, 100vw"
             className="object-cover object-center"
           />

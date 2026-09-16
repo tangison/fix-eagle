@@ -9,7 +9,7 @@ import "./globals.css";
 
 const display = Cormorant_Garamond({
   variable: "--font-display-loaded",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   subsets: ["latin"],
   display: "swap",
 });
