@@ -140,3 +140,42 @@ Stage Summary:
   https://fix-eagle-targis47s-projects.vercel.app
 - Menu overlay wins the blind comparison against the Collins bar;
   typography now runs the Target register on exact brand color codes.
+
+---
+Task ID: 4
+Agent: Super Z (main agent)
+Task: Post-revision verification pass; fix any regressions found on the
+live deployment.
+
+Work Log:
+- Re-verified the deployed revision end to end: all 14 routes plus
+  robots/sitemap return 200, 404 works, wordmark reads FIX EAGLE /
+  Auctioneers with Investments only in metadata and legal lines, the
+  self-hosted Inter variable (100 to 900) loads 200 at 48KB, the
+  Collins-style menu overlay opens with featured work column, the
+  case-study carousel slides, and desktop mega dropdowns are wired.
+- Found a real defect on the brown text-heavy pages: the body:has()
+  hooks referenced var(--paper) outside the .theme-brown wrapper, so
+  the custom properties resolved to root white. Brown pages rendered a
+  white header bar and a 623px white footer outside the cocoa wrapper.
+- Fixed by extending the brown token block in tokens.css to target the
+  header and footer directly (body:has(.theme-brown) .site-header /
+  .site-footer), adding the missing site-footer class hook plus
+  text-ink on the footer element (the token override alone does not
+  re-declare the inherited color property), and painting the body cocoa
+  so overscroll never shows white.
+- Also repaired the stale start script still pointing at the dropped
+  standalone server output.
+- Verified locally on a production build: brown pages paint cocoa
+  across header, body, wrapper and footer with ivory ink, gold
+  statement, soft 9.54:1, links 12.55:1; dark mode leaves the brown
+  theme fixed as designed; home and all light pages unchanged (white
+  ground, charcoal ink); no console errors; lint clean.
+- Pushed 4963e92 to github.com/tangison/fix-eagle; waited for the
+  Vercel auto-deploy and confirmed the fix is live: brown pages now
+  carry the cocoa header and footer, light pages untouched.
+
+Stage Summary:
+- The brown ground now runs edge to edge on privacy, terms, disclaimer
+  and brand; every other page stays on the white base. Live at
+  https://fix-eagle-targis47s-projects.vercel.app
