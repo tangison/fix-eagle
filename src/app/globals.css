@@ -346,6 +346,9 @@
 }
 
 /* On brown pages the solid header joins the brown ground */
+body:has(.theme-brown) {
+  background: #2E261B;
+}
 body:has(.theme-brown) .site-header.is-solid {
   background: var(--paper);
   border-bottom-color: var(--rule);

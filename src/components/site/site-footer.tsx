@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="hair-t mt-auto bg-paper">
+    <footer className="site-footer hair-t mt-auto bg-paper text-ink">
       <div className="shell py-20 md:py-24">
         <p className="foot-statement">{site.closingLine}</p>
         <p className="measure mt-6 text-soft">

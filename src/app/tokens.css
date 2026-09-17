@@ -112,8 +112,12 @@
 
 /* Brown theme: the text-heavy pages. Deep cocoa built from the brand
    charcoal warmed toward the gold hue, ivory body text, gold headings.
-   Fixed, not mode-flipped: the page reads the same in light and dark. */
-.theme-brown {
+   Fixed, not mode-flipped: the page reads the same in light and dark.
+   The footer lives outside the page wrapper, so it joins the ground
+   through the same body:has() hook the header uses. */
+.theme-brown,
+body:has(.theme-brown) .site-header,
+body:has(.theme-brown) .site-footer {
   --paper:      #2E261B;
   --paper-2:    #382F22;
   --paper-3:    #42382A;
