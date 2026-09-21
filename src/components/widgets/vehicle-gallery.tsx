@@ -20,6 +20,10 @@ export function VehicleGallery({
 }) {
   const [index, setIndex] = useState(0);
   const many = images.length > 1;
+  const isPlaceholder = images[index].includes("stock-photo-pending");
+  const alt = isPlaceholder
+    ? `${title}: photo to follow. Enquire on WhatsApp for the latest photos of this vehicle.`
+    : `${title}, photo ${index + 1} of ${images.length}, at the Fix Eagle yard in Windhoek`;
 
   return (
     <div className="vehicle-gallery">
@@ -28,7 +32,7 @@ export function VehicleGallery({
         <Image
           key={images[index]}
           src={images[index]}
-          alt={`${title}, photo ${index + 1} of ${images.length}, at the Fix Eagle yard in Windhoek`}
+          alt={alt}
           fill
           priority
           quality={82}

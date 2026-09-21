@@ -6,6 +6,7 @@ import { PhotoCarousel } from "@/components/site/photo-carousel";
 import { ChannelTabs } from "@/components/site/channel-tabs";
 import { VehicleCarousel } from "@/components/widgets/vehicle-carousel";
 import { MapCard } from "@/components/widgets/map-card";
+import { FacebookPageFeed } from "@/components/widgets/facebook-page-feed";
 import {
   featuredWork,
   processSteps,
@@ -227,6 +228,29 @@ export default function HomePage() {
           <div className="shell-wide mt-10 px-[var(--gutter)]">
             <VehicleCarousel vehicles={vehicles.slice(0, 6)} />
           </div>
+        </div>
+      </section>
+
+      {/* Live from Facebook: the page feed, click-to-load. */}
+      <section className="section hair-t" aria-label="Facebook feed">
+        <div className="shell grid items-start gap-10 lg:grid-cols-[1fr_500px]">
+          <div>
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
+              Follow the yard on Facebook
+            </h2>
+            <p className="mt-6 max-w-[52ch] text-[var(--soft)]">
+              Every sales alert, auction bargain and yard update goes out on
+              our Facebook page first, at facebook.com/fixeagle, and lands on
+              this register the same day. Follow the page for the newest
+              arrivals as they are unloaded, and message us there or on
+              WhatsApp when something catches your eye.
+            </p>
+            <p className="mt-4 max-w-[52ch] text-[var(--soft)]">
+              The feed loads here only when you ask for it, so the page stays
+              fast and free of third-party scripts until you choose otherwise.
+            </p>
+          </div>
+          <FacebookPageFeed height={620} />
         </div>
       </section>
 
