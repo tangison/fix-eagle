@@ -266,3 +266,60 @@ Stage Summary:
   auction date to activate the countdown. Edit src/data/vehicles.ts.
 - The GitHub PAT was used from the session only and should be rotated
   after this push.
+
+---
+Task ID: 6
+Agent: Super Z (main agent)
+Task: Whole-Facebook-page harvest per client request: scrape
+facebook.com/fixeagle (and Niklaas's public posts) with Scrapling and a
+browser, download all vehicle photos at full resolution, expand the
+register, and embed the page feed on the site.
+
+Work Log:
+- Installed scrapling[all] 0.4.15 + camoufox in the venv; agent-browser
+  carried the JS-rendering pass.
+- Located the business page: facebook.com/fixeagle ("Fix Eagle
+  Investments cc T/A FEI-Auctioneers", 1.9K followers). Timelines and
+  photo grids sit behind login walls, so the harvest ran at post level:
+  every registered post permalink renders publicly in a real browser.
+- Crawled 8 post permalinks + the profile feed, capturing signed CDN
+  URLs, og: metadata and full post texts (2 500 chars each).
+- Discovered the full-res trick holds on signed URLs: dropping the ctp
+  query param yields the original upload (2048x1536). Downloaded 37/37
+  photos, visually verified each set on labelled contact sheets, and
+  converted 33 new assets to WebP q82 (1.5x Lanczos3 upscale on the
+  two 1024px sets) into public/images/vehicles/.
+- Register grew from 7 to 10 listings: Chevrolet Aveo LS 2015 (photos
+  sat inside the wanted post), Toyota Ipsum 2006 and VW Golf FSI 2006
+  (both from the Jeep urgent-sale post; the Golf post has no photo, so
+  a branded stock-photo-pending.webp placeholder was generated).
+- Confirmed data from the full texts: Amarok N$145K Neg with the turbo
+  actuator disclosure; Koleos reserve N$53k Neg, white, manual,
+  handbrake and release bearing repairs; Nissan Note 2013, sky blue,
+  71 465 km, N$65k (September clearance reserve 73k Neg); Mercedes-Benz
+  B180 2013 at N$67,500 with the gearbox disclosure; Ranger 3.2
+  6-speed 4x4, 176 000 km, gear 5/6 synchromizer; Jeep Patriot 2011
+  2.4 Dual VVT, accident free. Koleos and Amarok marked "confirmed".
+- Galleries: Koleos 7, Amarok 5, Ranger 6, Note 6, B180 5, Jeep 4,
+  Ipsum 2, Aveo 3 photos.
+- Facebook page feed embed: new facebook-page-feed.tsx widget
+  (click-to-load plugins/page.php iframe with timeline tab, branded
+  resting card showing 1.9K followers, fallback link) on a new home
+  section "Follow the yard on Facebook".
+- Gallery alt text now detects the placeholder and describes it
+  honestly instead of claiming the yard photo.
+- Lint clean, production build passes (33 routes, 10 vehicle pages
+  SSG), browser-verified locally, pushed 0df6389 to main, Vercel
+  deploy verified live: all routes, sitemap with 10 vehicle URLs and
+  the new WebP assets return 200.
+
+Stage Summary:
+- Live: 10-listing register, multi-photo galleries, Facebook feed
+  section on the home page.
+- Client TODOs: photos for the Golf FSI (placeholder until then);
+  prices for Jeep/Ranger/Aveo/Ipsum/Golf (posts invite bidding);
+  transmission and fuel for Note/B180; auction dates to activate the
+  countdown; the 17 April "workhorse" post shows an unidentified white
+  double cab bakkie - send make and model to list it. The 284210
+  clearance post's second photo shows a white Ranger double cab that
+  is not the listed King Cab; not added to avoid a wrong pairing.
