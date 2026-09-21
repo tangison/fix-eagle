@@ -5,6 +5,8 @@
  * the approved source document.
  */
 
+import { whatsappDisplay, whatsappLink } from "@/lib/whatsapp";
+
 export const site = {
   legalName: "Fix Eagle Investments CC",
   tradingName: "Fix Eagle Investments Auctioneers",
@@ -20,7 +22,9 @@ export const site = {
   email: "NiklaasK@fixeagleinvestments.com",
   phoneDisplay: "+264 81 864 6808",
   phoneHref: "+264818646808",
-  whatsapp: "https://wa.me/264818646808",
+  /** WhatsApp number lives in NEXT_PUBLIC_WHATSAPP_NUMBER; see lib/whatsapp. */
+  whatsapp: whatsappLink(),
+  whatsappDisplay: whatsappDisplay(),
   whatsappText:
     "Hello Fix Eagle, I would like to enquire about your services.",
   mapsUrl:
@@ -303,6 +307,7 @@ export const regions = [
 ] as const;
 
 export const navLinks = [
+  { href: "/vehicles", label: "Vehicles" },
   { href: "/services", label: "Services" },
   { href: "/process", label: "Process" },
   { href: "/case-studies", label: "Case studies" },
@@ -323,6 +328,7 @@ export const navGroups = [
       desc: s.summary,
     })),
   },
+  { href: "/vehicles", label: "Vehicles", kind: "link" as const },
   { href: "/process", label: "Process", kind: "link" as const },
   { href: "/case-studies", label: "Case studies", kind: "link" as const },
   {
@@ -343,35 +349,35 @@ export const featuredWork = [
   {
     entity: "NamPower",
     line: "Twenty-plus public live auctions, every one sold out, 2021 to 2025.",
-    photo: "/images/namibia-power-loco.jpg",
+    photo: "/images/namibia-power-loco.webp",
     alt: "Yellow rail locomotive offered at a NamPower auction",
     period: "2021 to 2025",
   },
   {
     entity: "NamWater",
     line: "Over 500 vehicles, earthmoving equipment and scrap metal, sold under two three-year contracts.",
-    photo: "/images/case-study-front-loader.jpg",
+    photo: "/images/case-study-front-loader.webp",
     alt: "Front loader earthmoving equipment lined up for a NamWater auction",
     period: "2018 to 2025",
   },
   {
     entity: "Hollard Insurance",
     line: "Storage and auctioning of vehicles, all executed and sold over the contract period.",
-    photo: "/images/case-study-toyota-hilux.jpg",
+    photo: "/images/case-study-toyota-hilux.webp",
     alt: "Toyota Hilux offered at a vehicle fleet disposal auction",
     period: "2020 to 2024",
   },
   {
     entity: "NamPower, loose goods",
     line: "Loose goods and building material, training centre auction yard.",
-    photo: "/images/loose-goods-auction-yard.jpg",
+    photo: "/images/loose-goods-auction-yard.webp",
     alt: "Loose goods laid out in an auction yard at the NamPower training centre",
     period: "October 2025",
   },
   {
     entity: "NamWater, office furniture",
     line: "Office furniture and filing cabinets, appraisal and auctioning.",
-    photo: "/images/case-study-filing-cabinets.jpg",
+    photo: "/images/case-study-filing-cabinets.webp",
     alt: "Office furniture and filing cabinets lined up for disposal",
     period: "2022 to 2025",
   },

@@ -90,13 +90,13 @@ export default function AboutPage() {
           </div>
           <div className="space-y-10">
             <PhotoFigure
-              src="/images/graduation-ceremony.jpg"
+              src="/images/graduation-ceremony.webp"
               alt="Niklaas Kisilipile at his graduation ceremony in Kempton Park"
               ratio="aspect-[16/10]"
               caption="Graduation ceremony, Kempton Park, South Africa. December 2017."
             />
             <PhotoFigure
-              src="/images/diploma-certificate.jpg"
+              src="/images/diploma-certificate.webp"
               alt="Diploma certificate from the South African College of Auctioneering"
               ratio="aspect-[16/10]"
               caption="Diploma, South African College of Auctioneering."

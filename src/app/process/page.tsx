@@ -45,7 +45,7 @@ export default function ProcessPage() {
             </p>
           </div>
           <PhotoFigure
-            src="/images/loose-goods-auction-yard.jpg"
+            src="/images/loose-goods-auction-yard.webp"
             alt="Loose goods laid out in an auction yard"
             ratio="aspect-[4/3]"
             caption="Loose goods auction, NamPower training centre, October 2025."
@@ -73,7 +73,7 @@ export default function ProcessPage() {
           </div>
           <div className="md:order-1">
             <PhotoFigure
-              src="/images/flexiauction-software-screenshot.jpg"
+              src="/images/flexiauction-software-screenshot.webp"
               alt="FlexiAuction auctioneering software, the system Fix Eagle uses to document every sale"
               ratio="aspect-[16/9]"
               caption="FlexiAuction, the auctioneering software behind our records."

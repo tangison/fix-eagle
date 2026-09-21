@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { ThemeProvider } from "@/components/site/theme-provider";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
+import { FloatingWhatsApp } from "@/components/widgets/floating-whatsapp";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -91,6 +92,7 @@ export default function RootLayout({
           <SiteHeader />
           <main id="main">{children}</main>
           <SiteFooter />
+          <FloatingWhatsApp />
         </ThemeProvider>
       </body>
     </html>

@@ -18,7 +18,7 @@ export function SiteFooter() {
             aria-label={`${site.tradingName}, home`}
           >
             <Image
-              src="/images/logo-full-sm.png"
+              src="/images/logo-full-sm.webp"
               alt=""
               width={31}
               height={34}
@@ -37,6 +37,7 @@ export function SiteFooter() {
           <nav aria-label="Footer" className="md:justify-self-center">
             <ul className="flex flex-wrap gap-x-8 gap-y-3">
               {[
+                { href: "/vehicles", label: "Vehicles" },
                 { href: "/services", label: "Services" },
                 { href: "/process", label: "Process" },
                 { href: "/case-studies", label: "Case studies" },

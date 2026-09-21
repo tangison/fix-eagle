@@ -39,7 +39,7 @@ export default function BrandPage() {
               <div className="flex flex-wrap items-end gap-10 not-italic">
                 <figure>
                   <Image
-                    src="/images/logo-full.png"
+                    src="/images/logo-full.webp"
                     alt="Full-colour Fix Eagle logo, eagle on gold disc"
                     width={120}
                     height={131}
@@ -51,7 +51,7 @@ export default function BrandPage() {
                 </figure>
                 <figure>
                   <Image
-                    src="/images/logo-eagle.png"
+                    src="/images/logo-eagle.webp"
                     alt="Eagle mark without the gold disc"
                     width={120}
                     height={124}

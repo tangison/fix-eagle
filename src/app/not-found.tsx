@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <section className="shell flex min-h-[80dvh] flex-col items-start justify-center py-32">
       <Image
-        src="/images/logo-eagle.png"
+        src="/images/logo-eagle.webp"
         alt=""
         width={72}
         height={74}

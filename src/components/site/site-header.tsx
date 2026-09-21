@@ -29,7 +29,7 @@ export function Wordmark({
       aria-label={`${site.tradingName}, home`}
     >
       <Image
-        src="/images/logo-full.png"
+        src="/images/logo-full.webp"
         alt=""
         width={37}
         height={40}
@@ -233,7 +233,7 @@ export function SiteHeader() {
               href={site.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline hidden !px-5 !py-2.5 text-[0.82rem] xl:inline-flex"
+              className="btn-outline header-whatsapp"
             >
               WhatsApp
               <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} aria-hidden />

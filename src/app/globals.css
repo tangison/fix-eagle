@@ -946,3 +946,556 @@ select.field-input {
 .theme-brown .prose-doc p + p {
   margin-top: var(--space-md);
 }
+
+/* --------------------------------------------------------------------------
+   Header WhatsApp pill: desktop only
+   --------------------------------------------------------------------------
+   The custom component classes in this file are unlayered, so they beat
+   Tailwind's layered `hidden` utility: the old `hidden xl:inline-flex`
+   pair silently never hid anything and the pill showed on phones.
+   This rule owns the viewport switch itself, with specificity above
+   .btn-outline, so the intent holds regardless of layer order. */
+
+.site-header .header-whatsapp {
+  display: none;
+}
+
+@media (min-width: 80rem) {
+  .site-header .header-whatsapp {
+    display: inline-flex;
+    padding: 0.62rem 1.35rem;
+    font-size: 0.82rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Stock status badges
+   -------------------------------------------------------------------------- */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: var(--r-pill);
+  padding: 0.32rem 0.8rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.status-badge .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--r-pill);
+  background: currentColor;
+}
+
+.status-available {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.status-sold {
+  background: oklch(24% 0.01 80 / 0.82);
+  color: var(--paper);
+}
+.status-auction {
+  background: var(--paper);
+  color: #B45309;
+  border: 1.5px solid var(--orange);
+}
+.status-wanted {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid currentColor;
+}
+
+/* --------------------------------------------------------------------------
+   Vehicle cards (case-card register)
+   -------------------------------------------------------------------------- */
+
+.vehicle-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule-2);
+  height: 100%;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-out);
+}
+.vehicle-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 36px -16px oklch(20% 0.01 80 / 0.25);
+  transform: translateY(-3px);
+}
+.vehicle-card .vehicle-title {
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  line-height: 1.25;
+}
+.vehicle-card .vehicle-price {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--accent-deep);
+}
+
+/* --------------------------------------------------------------------------
+   Stock explorer controls
+   -------------------------------------------------------------------------- */
+
+.explorer-controls {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 48rem) {
+  .explorer-controls {
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+  .explorer-controls > :nth-child(4),
+  .explorer-controls > :nth-child(5) {
+    grid-column: auto;
+  }
+}
+@media (min-width: 72rem) {
+  .explorer-controls {
+    grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.field-input-search {
+  padding-left: 2.75rem;
+}
+
+.explorer-empty {
+  border: var(--rule-hair) dashed var(--rule);
+  border-radius: var(--r-card);
+  padding: var(--space-2xl) var(--space-lg);
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Auction countdown
+   -------------------------------------------------------------------------- */
+
+.countdown {
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  background: var(--paper-2);
+  padding: var(--space-lg);
+}
+.countdown-label {
+  color: var(--muted);
+}
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+.countdown-cell {
+  text-align: center;
+  background: var(--paper);
+  border: var(--rule-hair) solid var(--rule-2);
+  border-radius: var(--r-input);
+  padding: 0.7rem 0.4rem;
+}
+.countdown-cell dd {
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  line-height: 1;
+  color: var(--ink-2);
+}
+.countdown-cell dt {
+  margin-top: 0.35rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.countdown-closed {
+  color: var(--accent-deep);
+  font-weight: 700;
+}
+.countdown-pending {
+  border: var(--rule-hair) dashed var(--rule);
+  border-radius: var(--r-card);
+  padding: var(--space-md) var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Facebook embed, click-to-load card
+   -------------------------------------------------------------------------- */
+
+.fb-embed {
+  margin: 0;
+}
+.fb-embed-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  background: var(--paper-2);
+  padding: var(--space-lg);
+}
+.fb-embed-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  flex: none;
+  border-radius: var(--r-pill);
+  background: #1877F2;
+  color: #FFFFFF;
+}
+.fb-embed-meta {
+  min-width: 0;
+  flex: 1 1 12rem;
+}
+.fb-embed-kind {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fb-embed-title {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--ink-2);
+}
+.fb-embed-url {
+  display: block;
+  margin-top: 0.25rem;
+  overflow-wrap: anywhere;
+}
+.fb-embed-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.fb-embed-btn {
+  padding: 0.55rem 1.2rem;
+  font-size: 0.85rem;
+}
+.fb-embed-load {
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 0;
+}
+.fb-embed-frame {
+  position: relative;
+  height: min(70vh, 560px);
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--paper-2);
+}
+.fb-embed-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Map and contact card
+   -------------------------------------------------------------------------- */
+
+.map-card {
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  background: var(--paper);
+  overflow: hidden;
+}
+.map-frame {
+  position: relative;
+  min-height: 20rem;
+  height: 100%;
+}
+.map-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.map-details {
+  padding: var(--space-xl) var(--space-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Vehicle gallery
+   -------------------------------------------------------------------------- */
+
+.vehicle-gallery {
+  display: grid;
+  gap: 0.75rem;
+}
+.gallery-main {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--paper-3);
+  border: var(--rule-hair) solid var(--rule-2);
+}
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--r-pill);
+  border: 1px solid oklch(96% 0.01 90 / 0.35);
+  background: oklch(20% 0.012 80 / 0.45);
+  color: var(--photo-ink);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+.gallery-arrow:hover {
+  background: oklch(20% 0.012 80 / 0.65);
+}
+.gallery-arrow-prev { left: 0.9rem; }
+.gallery-arrow-next { right: 0.9rem; }
+
+.gallery-thumbs {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+.gallery-thumb {
+  position: relative;
+  width: 6rem;
+  aspect-ratio: 4 / 3;
+  flex: none;
+  border-radius: var(--r-input);
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  opacity: 0.75;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+.gallery-thumb[data-active="true"] {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Share row
+   -------------------------------------------------------------------------- */
+
+.share-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md);
+}
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    border-color var(--dur-short) var(--ease-out),
+    background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+.share-btn:hover {
+  border-color: var(--accent);
+  background: var(--paper-2);
+}
+
+/* --------------------------------------------------------------------------
+   Floating WhatsApp widget
+   -------------------------------------------------------------------------- */
+
+.float-wa {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 260;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  opacity: 0;
+  animation: float-wa-in 480ms var(--ease-out) forwards;
+}
+@keyframes float-wa-in {
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .float-wa { animation-duration: 150ms; }
+}
+
+.float-wa-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  border: 0;
+  cursor: pointer;
+  border-radius: var(--r-pill);
+  background: #1FA855;
+  color: #FFFFFF;
+  padding: 0.9rem 1.3rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.92rem;
+  box-shadow: 0 10px 30px -10px oklch(20% 0.01 80 / 0.5);
+  transition:
+    transform 100ms var(--ease-out),
+    background-color var(--dur-short) var(--ease-out),
+    box-shadow var(--dur-short) var(--ease-out);
+}
+.float-wa-btn:hover {
+  background: #189349;
+  box-shadow: 0 14px 34px -10px oklch(20% 0.01 80 / 0.55);
+}
+.float-wa-btn:active {
+  transform: translateY(1px);
+}
+.float-wa-glyph {
+  width: 1.45rem;
+  height: 1.45rem;
+  flex: none;
+}
+.float-wa-label {
+  line-height: 1;
+}
+@media (max-width: 47.9375rem) {
+  .float-wa-btn { padding: 0.9rem; }
+  .float-wa-label { display: none; }
+}
+
+.float-wa-panel {
+  width: min(20.5rem, calc(100vw - 2rem));
+  border: var(--rule-hair) solid var(--rule);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: 0 24px 60px -18px oklch(20% 0.01 80 / 0.45);
+}
+.float-wa-head {
+  background: var(--menu-bg);
+  color: var(--menu-ink);
+  padding: var(--space-md) var(--space-lg);
+}
+.float-wa-head .label-caps {
+  color: var(--accent);
+}
+.float-wa-title {
+  margin-top: 0.2rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.float-wa-body {
+  padding: var(--space-lg);
+  display: grid;
+  gap: var(--space-md);
+}
+.float-wa-copy {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.float-wa-cta {
+  justify-content: center;
+}
+.float-wa-alt {
+  justify-self: center;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.float-wa-alt:hover {
+  color: var(--accent-deep);
+}
+
+/* Enquiry confirmation */
+.ef-done {
+  border-left: 3px solid var(--accent);
+  background: var(--paper-2);
+  border-radius: 0 var(--r-input) var(--r-input) 0;
+  padding: var(--space-md) var(--space-lg);
+  font-size: 0.95rem;
+}
+
+/* WhatsApp action pill: the widget's green, on the .btn register */
+.btn-whatsapp {
+  background: #1FA855;
+  border-color: #1FA855;
+  color: #FFFFFF;
+}
+.btn-whatsapp:hover {
+  background: #189349;
+  border-color: #189349;
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px -8px oklch(45% 0.12 150 / 0.55);
+}
+
+/* Specs table on the vehicle page: the reference-table register,
+   compacted for key-value pairs. */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.spec-table th {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--rule);
+  width: 38%;
+}
+.spec-table td {
+  padding: var(--space-md);
+  border-bottom: var(--rule-hair) solid var(--rule-2);
+  color: var(--ink);
+}
+.spec-table td .todo-note {
+  color: var(--muted);
+  font-style: italic;
+}

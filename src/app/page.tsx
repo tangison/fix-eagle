@@ -4,6 +4,8 @@ import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { PhotoCarousel } from "@/components/site/photo-carousel";
 import { ChannelTabs } from "@/components/site/channel-tabs";
+import { VehicleCarousel } from "@/components/widgets/vehicle-carousel";
+import { MapCard } from "@/components/widgets/map-card";
 import {
   featuredWork,
   processSteps,
@@ -11,6 +13,7 @@ import {
   site,
   stats,
 } from "@/lib/site";
+import { vehicles } from "@/data/vehicles";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -22,7 +25,7 @@ const organizationJsonLd = {
   name: site.tradingName,
   legalName: site.legalName,
   url: site.url,
-  logo: `${site.url}/images/logo-full.png`,
+  logo: `${site.url}/images/logo-192.png`,
   image: `${site.url}/images/og-default.jpg`,
   description: site.description,
   foundingDate: "2013",
@@ -46,21 +49,21 @@ const channels = [
   {
     name: "Live auctions",
     body: "Onsite auctions, planned, coordinated and executed for maximum sales and full attendance of prospective bidders.",
-    photo: "/images/live-auction-crowd.jpg",
+    photo: "/images/live-auction-crowd.webp",
     alt: "Bidders gathered under a shed at a live auction",
     caption: "Live auction, NamPower. Onsite bidding.",
   },
   {
     name: "Online auctions",
     body: "A web-based online auction sale, used to dispose of specialised equipment that requires a wider range of prospective clientele.",
-    photo: "/images/sale-3d-render.jpg",
+    photo: "/images/sale-3d-render.webp",
     alt: "Gold sale graphic representing online auction sales",
     caption: "Web-based sales for specialised assets.",
   },
   {
     name: "Private treaty",
     body: "The preferred sales method for specialised assets. We negotiate with a selected group of buyers on your behalf, to a predetermined end date.",
-    photo: "/images/gavel-stock.jpg",
+    photo: "/images/gavel-stock.webp",
     alt: "Auction gavel resting on a block",
     caption: "Negotiated sales to selected buyers.",
   },
@@ -79,7 +82,7 @@ export default function HomePage() {
         <div id="hero-sentinel" aria-hidden="true" className="absolute top-0 h-px w-full" />
         <div className="relative flex min-h-[94dvh] items-end">
           <Image
-            src="/images/hero-eagle-cover.jpg"
+            src="/images/hero-eagle-cover.webp"
             alt="Eagle portrait, the Fix Eagle mark"
             fill
             priority
@@ -205,6 +208,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Latest stock, straight from the yard. */}
+      <section className="section hair-t" aria-label="Latest vehicles">
+        <div className="shell-wide">
+          <div className="shell-wide flex flex-wrap items-end justify-between gap-6 px-[var(--gutter)]">
+            <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
+              Latest from the yard
+            </h2>
+            <Link href="/vehicles" className="link-type text-[0.95rem]">
+              All vehicles
+              <ArrowRight
+                className="ml-1 inline h-4 w-4"
+                strokeWidth={1.75}
+                aria-hidden
+              />
+            </Link>
+          </div>
+          <div className="shell-wide mt-10 px-[var(--gutter)]">
+            <VehicleCarousel vehicles={vehicles.slice(0, 6)} />
+          </div>
+        </div>
+      </section>
+
       {/* Selected work, as a carousel. */}
       <section className="section hair-t" aria-label="Selected work">
         <div className="shell-wide">
@@ -255,7 +280,7 @@ export default function HomePage() {
         <div className="shell grid items-center gap-12 md:grid-cols-[1fr_1.15fr] md:gap-20">
           <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--r-card)]">
             <Image
-              src="/images/graduation-ceremony.jpg"
+              src="/images/graduation-ceremony.webp"
               alt="Niklaas Kisilipile at his graduation ceremony"
               fill
               sizes="(min-width: 48rem) 45vw, 100vw"
@@ -295,6 +320,22 @@ export default function HomePage() {
                 />
               </Link>
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Find the yard: map and contact details. */}
+      <section className="section hair-t" aria-label="Visit the yard">
+        <div className="shell">
+          <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
+            Find us in Prosperita
+          </h2>
+          <p className="measure mt-5 text-soft">
+            Viewings at the yard in Windhoek, or wherever the assets stand.
+            Call, message on WhatsApp, or send an email.
+          </p>
+          <div className="mt-10">
+            <MapCard />
           </div>
         </div>
       </section>

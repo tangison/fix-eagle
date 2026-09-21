@@ -179,3 +179,90 @@ Stage Summary:
 - The brown ground now runs edge to edge on privacy, terms, disclaimer
   and brand; every other page stays on the white base. Live at
   https://fix-eagle-targis47s-projects.vercel.app
+
+---
+Task ID: 5
+Agent: Super Z (main agent)
+Task: Vehicles register, widgets, mobile header WhatsApp fix, WebP asset
+conversion, code and copy audit, pushed to GitHub.
+
+Work Log:
+- Resolved all 7 Facebook share links through redirect metadata (curl
+  with mobile UA; Facebook blocks plain server reads). Recovered
+  canonical post URLs, post text slugs and og:image photos for every
+  link. Downloaded the photos at full resolution by dropping the ctp
+  downscale parameter: five at 2048x1536, two at 1024x768.
+- Asset pipeline (scripts/optimize-images.mjs): converted all 16 site
+  JPGs to WebP q82, the three logo PNGs to WebP with alpha, and the 7
+  vehicle photos to WebP into public/images/vehicles/ with a 1.5x
+  Lanczos3 upscale on the two 1024px sources. og-default.jpg and
+  og-inner.jpg stay JPG for social crawler safety; icon.png,
+  apple-icon.png and logo-192.png stay PNG for platform requirements.
+  All references swept from JPG/PNG to WebP.
+- Root-caused the header WhatsApp button showing on mobile: the custom
+  component classes in globals.css are unlayered, so they beat
+  Tailwind's layered hidden utility and `hidden xl:inline-flex`
+  silently never hid anything. Fixed with a .header-whatsapp rule that
+  owns the viewport switch with higher specificity; verified hidden at
+  390px and 320px, visible at 1440px.
+- WhatsApp number moved to NEXT_PUBLIC_WHATSAPP_NUMBER via lib/whatsapp
+  (whatsappLink, whatsappDisplay with Namibian +264 grouping,
+  vehicleEnquiryLink). site.whatsapp now builds from the env; .env
+  created locally, .env.example committed.
+- Built the stock register src/data/vehicles.ts: 7 typed entries with
+  the exact fields requested plus priceNote, isVideoPost and a
+  dataConfidence marker (confirmed / partial / photo-only). Every field
+  the post text does not state is null with a TODO. Nothing invented:
+  the Koleos and Amarok facts come from the post slugs (year, km,
+  4Motion, TDI diesel, service history, N$145 truncated), the wanted
+  post records the buying bracket, the Nissan Note and Mercedes
+  B-Class are photo-only identifications marked to confirm.
+- Built /vehicles (PageHero + client explorer: search, make, status,
+  price-range, sort, result count, empty state) and /vehicles/[slug]
+  with generateStaticParams and generateMetadata (OG from the vehicle
+  photo, Car JSON-LD with an Offer only when a price is confirmed),
+  gallery, spec table with honest to-be-confirmed cells, status badge,
+  WhatsApp enquiry deep link prefilled with the vehicle name, share
+  buttons (native share via useSyncExternalStore, WhatsApp, Facebook,
+  copy), countdown for auction listings, source-post embed, enquiry
+  form, related vehicles.
+- Built /components/widgets: floating-whatsapp (site-wide in layout,
+  hydration-safe late mount, panel with prefilled general enquiry,
+  safe-area aware, icon-only below 768px), status-badge, vehicle-card,
+  vehicle-carousel (embla, PhotoCarousel register), auction-countdown
+  (placeholder until mount, interval cleaned up), facebook-embed
+  (click-to-load plugin iframe, branded fallback link card as resting
+  state, no third-party weight until asked), enquiry-form (client
+  validation, honeypot, posts to /api/enquiry), map-card (keyless
+  Google embed, lazy), share-buttons, vehicles-explorer,
+  whatsapp-icon.
+- /api/enquiry route handler: zod validation (422 on bad input),
+  structured console log as the record, returns a WhatsApp handoff URL
+  with the composed enquiry. Client falls back to composing the URL
+  locally if the request fails.
+- Homepage: new "Latest from the yard" carousel section and "Find us in
+  Prosperita" map section; nav (desktop mega list, menu overlay, footer)
+  and sitemap gained /vehicles plus the 7 vehicle URLs; home JSON-LD
+  logo now points at logo-192.png.
+- Copy audit sweep: grammar fix on the vehicles intro, honest pending
+  markers on every unknown spec. No em dashes anywhere.
+- Verified: lint clean, tsc clean for site code, production build
+  passes (28 pages, 7 vehicle pages SSG), all routes plus sitemap,
+  robots, manifest, WebP assets 200, 404 works. Browser checks at
+  1440/390/320: no horizontal scroll, no console errors, filters
+  filter (Auction shows the Jeep, search "amarok" shows the bakkie),
+  enquiry form validates and hands off to WhatsApp with the full
+  message, floating panel opens and closes, dark mode adapts, brown
+  pages untouched.
+
+Stage Summary:
+- Live sections: vehicles register with 7 listings, floating WhatsApp
+  widget on every page, latest-stock carousel and map card on the
+  homepage, enquiry API logging with WhatsApp handoff.
+- TODOs for the client: confirm prices (Amarok shows N$145 truncated in
+  the slug), years, mileage, transmission and fuel for the five
+  partial listings; confirm make and model for the two photo-only
+  posts (Nissan Note, Mercedes-Benz B-Class); set the Jeep Patriot
+  auction date to activate the countdown. Edit src/data/vehicles.ts.
+- The GitHub PAT was used from the session only and should be rotated
+  after this push.

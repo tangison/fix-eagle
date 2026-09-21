@@ -36,7 +36,7 @@ export default function ServicesPage() {
       <section aria-label="Marketing of assets" className="pb-4">
         <div className="relative aspect-[16/9]">
           <Image
-            src="/images/marketing-delivery-truck.jpg"
+            src="/images/marketing-delivery-truck.webp"
             alt="Delivery truck used in an auction marketing campaign"
             fill
             sizes="(min-width: 90rem) 1440px, 100vw"

@@ -53,7 +53,7 @@ export function MenuOverlay({
             aria-label={`${site.tradingName}, home`}
           >
             <Image
-              src="/images/logo-full.png"
+              src="/images/logo-full.webp"
               alt=""
               width={37}
               height={40}

@@ -66,3 +66,6 @@ server.log
 /scripts-filebin-list.json
 /verify-home-*.png
 /db/
+
+# Keep the example file tracked
+!.env.example
