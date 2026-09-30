@@ -7,6 +7,7 @@ import { ChannelTabs } from "@/components/site/channel-tabs";
 import { VehicleCarousel } from "@/components/widgets/vehicle-carousel";
 import { MapCard } from "@/components/widgets/map-card";
 import { FacebookPageFeed } from "@/components/widgets/facebook-page-feed";
+import { WhatsAppIcon } from "@/components/widgets/whatsapp-icon";
 import {
   featuredWork,
   processSteps,
@@ -14,7 +15,8 @@ import {
   site,
   stats,
 } from "@/lib/site";
-import { vehicles } from "@/data/vehicles";
+import { vehicles, formatPrice } from "@/data/vehicles";
+import { vehicleEnquiryLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -71,6 +73,18 @@ const channels = [
 ];
 
 export default function HomePage() {
+  /**
+   * The hero sells real stock: the newest available listing with a
+   * confirmed price. When nothing priced is in the register it falls
+   * back to the brand portrait and the appraisal pitch.
+   */
+  const heroVehicle = vehicles.find(
+    (v) =>
+      v.status === "available" &&
+      v.price !== null &&
+      !v.images[0].includes("stock-photo-pending")
+  );
+
   return (
     <>
       <script
@@ -78,59 +92,121 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
       />
 
-      {/* Hero: the eagle portrait carries the fold. */}
+      {/* Hero: the yard's current vehicle, priced and on the clock. */}
       <section className="relative" aria-label="Introduction">
         <div id="hero-sentinel" aria-hidden="true" className="absolute top-0 h-px w-full" />
         <div className="relative flex min-h-[94dvh] items-end">
-          <Image
-            src="/images/hero-eagle-cover.webp"
-            alt="Eagle portrait, the Fix Eagle mark"
-            fill
-            priority
-            fetchPriority="high"
-            quality={82}
-            sizes="(min-width: 90rem) 1440px, 100vw"
-            className="object-cover object-center"
-          />
+          {heroVehicle ? (
+            <Image
+              src={heroVehicle.images[0]}
+              alt={`${heroVehicle.title} for sale at the Fix Eagle yard in Windhoek`}
+              fill
+              priority
+              fetchPriority="high"
+              quality={82}
+              sizes="(min-width: 90rem) 1440px, 100vw"
+              className="object-cover object-center"
+            />
+          ) : (
+            <Image
+              src="/images/hero-eagle-cover.webp"
+              alt="Eagle portrait, the Fix Eagle mark"
+              fill
+              priority
+              fetchPriority="high"
+              quality={82}
+              sizes="(min-width: 90rem) 1440px, 100vw"
+              className="object-cover object-center"
+            />
+          )}
           <div
             aria-hidden="true"
             className="absolute inset-0 bg-[linear-gradient(to_right,oklch(18%_0.012_80/0.88)_0%,oklch(18%_0.012_80/0.55)_42%,oklch(18%_0.012_80/0.15)_100%)] max-md:bg-[linear-gradient(to_top,oklch(18%_0.012_80/0.92)_0%,oklch(18%_0.012_80/0.4)_55%,oklch(18%_0.012_80/0.25)_100%)]"
           />
           <div className="shell relative pb-20 pt-40 md:pb-28">
-            <p
-              className="reveal label-caps photo-text opacity-80"
-              style={{ "--i": 0 } as React.CSSProperties}
-            >
-              Windhoek, Namibia · Since 2013
-            </p>
-            <h1
-              className="reveal mt-5 max-w-[11ch] text-[clamp(2.9rem,6.5vw_+_0.5rem,5.5rem)] font-extrabold leading-[1.08] tracking-[-0.035em] photo-text"
-              style={{ "--i": 1 } as React.CSSProperties}
-            >
-              We add value to your assets.
-            </h1>
-            <p
-              className="reveal measure mt-7 max-w-[40ch] text-[1.12rem] leading-relaxed photo-text opacity-90"
-              style={{ "--i": 2 } as React.CSSProperties}
-            >
-              Live auctions, sworn valuation and private sales across all
-              fourteen regions of Namibia.
-            </p>
-            <div
-              className="reveal mt-10 flex flex-wrap items-center gap-6"
-              style={{ "--i": 3 } as React.CSSProperties}
-            >
-              <a href={site.whatsapp} className="btn on-dark">
-                Request an appraisal
-                <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
-              </a>
-              <Link
-                href="/services"
-                className="btn-outline on-photo !px-5 !py-2.5 text-[0.85rem]"
-              >
-                Explore services
-              </Link>
-            </div>
+            {heroVehicle && heroVehicle.price !== null ? (
+              <>
+                <p
+                  className="reveal label-caps photo-text opacity-80"
+                  style={{ "--i": 0 } as React.CSSProperties}
+                >
+                  On the yard now · {heroVehicle.title}
+                </p>
+                <h1
+                  className="reveal mt-5 max-w-[11ch] text-[clamp(2.9rem,6.5vw_+_0.5rem,5.5rem)] font-extrabold leading-[1.08] tracking-[-0.035em] photo-text tnum"
+                  style={{ "--i": 1 } as React.CSSProperties}
+                >
+                  {formatPrice(heroVehicle.price)}.
+                </h1>
+                <p
+                  className="reveal measure mt-7 max-w-[40ch] text-[1.12rem] leading-relaxed photo-text opacity-90"
+                  style={{ "--i": 2 } as React.CSSProperties}
+                >
+                  That is today's asking for the{" "}
+                  {heroVehicle.year !== null ? `${heroVehicle.year} ` : ""}
+                  {heroVehicle.title}, standing at Prosperita. View it before
+                  somebody else hands us the cash.
+                </p>
+                <div
+                  className="reveal mt-10 flex flex-wrap items-center gap-6"
+                  style={{ "--i": 3 } as React.CSSProperties}
+                >
+                  <a
+                    href={vehicleEnquiryLink(heroVehicle.title, heroVehicle.slug)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn on-dark"
+                  >
+                    <WhatsAppIcon className="h-4.5 w-4.5" aria-hidden />
+                    Enquire on WhatsApp
+                    <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                  </a>
+                  <Link
+                    href="/vehicles"
+                    className="btn-outline on-photo !px-5 !py-2.5 text-[0.85rem]"
+                  >
+                    Everything in stock
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <p
+                  className="reveal label-caps photo-text opacity-80"
+                  style={{ "--i": 0 } as React.CSSProperties}
+                >
+                  Windhoek, Namibia · Since 2013
+                </p>
+                <h1
+                  className="reveal mt-5 max-w-[11ch] text-[clamp(2.9rem,6.5vw_+_0.5rem,5.5rem)] font-extrabold leading-[1.08] tracking-[-0.035em] photo-text"
+                  style={{ "--i": 1 } as React.CSSProperties}
+                >
+                  We add value to your assets.
+                </h1>
+                <p
+                  className="reveal measure mt-7 max-w-[40ch] text-[1.12rem] leading-relaxed photo-text opacity-90"
+                  style={{ "--i": 2 } as React.CSSProperties}
+                >
+                  Live auctions, sworn valuation and private sales across all
+                  fourteen regions of Namibia.
+                </p>
+                <div
+                  className="reveal mt-10 flex flex-wrap items-center gap-6"
+                  style={{ "--i": 3 } as React.CSSProperties}
+                >
+                  <a href={site.whatsapp} className="btn on-dark">
+                    Request an appraisal
+                    <ArrowUpRight className="h-4 w-4" strokeWidth={2} aria-hidden />
+                  </a>
+                  <Link
+                    href="/services"
+                    className="btn-outline on-photo !px-5 !py-2.5 text-[0.85rem]"
+                  >
+                    Explore services
+                  </Link>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -214,10 +290,10 @@ export default function HomePage() {
         <div className="shell-wide">
           <div className="shell-wide flex flex-wrap items-end justify-between gap-6 px-[var(--gutter)]">
             <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
-              Latest from the yard
+              On the yard this week
             </h2>
             <Link href="/vehicles" className="link-type text-[0.95rem]">
-              All vehicles
+              Everything in stock
               <ArrowRight
                 className="ml-1 inline h-4 w-4"
                 strokeWidth={1.75}
@@ -236,18 +312,19 @@ export default function HomePage() {
         <div className="shell grid items-start gap-10 lg:grid-cols-[1fr_500px]">
           <div>
             <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
-              Follow the yard on Facebook
+              See it on Facebook first
             </h2>
             <p className="mt-6 max-w-[52ch] text-[var(--soft)]">
-              Every sales alert, auction bargain and yard update goes out on
-              our Facebook page first, at facebook.com/fixeagle, and lands on
-              this register the same day. Follow the page for the newest
-              arrivals as they are unloaded, and message us there or on
-              WhatsApp when something catches your eye.
+              Nearly two thousand people follow the yard at facebook.com/
+              fixeagle, because every sales alert lands there before anywhere
+              else: the price, the photos, the disclosures, and what just came
+              off the tow truck. The register on this site is refreshed from
+              the page the same day.
             </p>
             <p className="mt-4 max-w-[52ch] text-[var(--soft)]">
-              The feed loads here only when you ask for it, so the page stays
-              fast and free of third-party scripts until you choose otherwise.
+              Spot the car before the neighbour does, then message us on the
+              page or on WhatsApp to come and view it. The feed below loads
+              only when you tap it.
             </p>
           </div>
           <FacebookPageFeed height={620} />
@@ -352,11 +429,13 @@ export default function HomePage() {
       <section className="section hair-t" aria-label="Visit the yard">
         <div className="shell">
           <h2 className="text-[clamp(1.85rem,3.4vw,2.9rem)]">
-            Find us in Prosperita
+            Come and kick the tyres
           </h2>
           <p className="measure mt-5 text-soft">
-            Viewings at the yard in Windhoek, or wherever the assets stand.
-            Call, message on WhatsApp, or send an email.
+            The yard stands at Rem Erf 46, Platinum Street, Prosperita,
+            Windhoek. View a vehicle where it stands, or call us out to your
+            assets anywhere in the fourteen regions. WhatsApp us and we will
+            send a pin.
           </p>
           <div className="mt-10">
             <MapCard />

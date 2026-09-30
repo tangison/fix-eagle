@@ -17,9 +17,21 @@
  *   "photo-only" the post carries no readable text; the make and model
  *                were identified from the post photo and must be confirmed
  *
+ * Batch 3 (29-30 September 2026):
+ * - BMW X3 2012: from the page's "#Spring Sale alert" post, resolved and
+ *   downloaded in-browser at 2048x1536. All selling fields are stated in
+ *   the post text; the mileage is not, so it stays null.
+ * - Ford Ranger 2001 double cab: supplied by the client on WhatsApp with
+ *   two photos on filebin (one is an extra BMW shot, both used). No
+ *   Facebook post exists for it, so facebookUrl is empty and the source
+ *   post section is skipped for this listing.
+ *
  * STILL TO CONFIRM (client TODOs)
- * - Jeep Patriot, Ford Ranger, Aveo, Ipsum and Golf asking prices: the
- *   posts invite bidding without figures.
+ * - BMW X3: mileage and the exact xDrive variant (the post says
+ *   "4motion", which reads as all wheel drive).
+ * - Ford Ranger 2001: asking price and mileage.
+ * - Jeep Patriot, Ford Ranger King Cab, Aveo, Ipsum and Golf asking
+ *   prices: the posts invite bidding without figures.
  * - Toyota Ipsum and VW Golf FSI year variants, mileage and gearbox
  *   details beyond what the post states.
  * - The Golf FSI 2006 post carries no photo; the card shows the branded
@@ -63,6 +75,60 @@ export type Vehicle = {
 };
 
 export const vehicles: Vehicle[] = [
+  {
+    id: "fb-1742530060703809",
+    slug: "bmw-x3-2012",
+    title: "BMW X3",
+    make: "BMW",
+    model: "X3",
+    year: 2012,
+    price: 125000,
+    priceNote:
+      "The post states N$ 125,000, negotiable. Roadworthy with police clearance.",
+    mileage: null, // TODO: confirm (not stated in the post)
+    transmission: "Automatic", // stated in the post
+    fuelType: "Diesel", // stated in the post
+    condition:
+      "Used, good condition. Roadworthy, police clearance done. Leather seats, aircon, all wheel drive (the post lists 4motion).",
+    location: "Windhoek, Namibia",
+    description:
+      "Spring sale alert, straight off the page: a BMW X3 2012 in white, a diesel with the automatic gearbox and all wheel drive, listed in the post as 4motion. Inside it carries leather seats and aircon, and the car is sold roadworthy with the police clearance already done, so the paperwork is out of your way. The post asks N$ 125 000, negotiable, and calls the car good condition. That is this week's spring sale price at the yard. View and bid at REM Erf 46 Platinum Street, Prosperita, or call 081 864 6808.",
+    images: [
+      "/images/vehicles/bmw-x3-2012.webp",
+      "/images/vehicles/bmw-x3-2012-2.webp",
+      "/images/vehicles/bmw-x3-2012-3.webp",
+      "/images/vehicles/bmw-x3-2012-4.webp",
+      "/images/vehicles/bmw-x3-2012-5.webp",
+      "/images/vehicles/bmw-x3-2012-6.webp",
+    ],
+    status: "available",
+    auctionDate: null,
+    facebookUrl:
+      "https://www.facebook.com/fixeagle/posts/pfbid02SCJzQv6FaZ1dWvkdoeAHBSa3cnAfCFxB1k3f5HqQ6CBfnn8SXhpTtS3Zdf4yVyPpl",
+    dataConfidence: "partial",
+  },
+  {
+    id: "wa-filebin-w0ds2ec27movu92z",
+    slug: "ford-ranger-2001-double-cab",
+    title: "Ford Ranger 2.5 double cab 4x4",
+    make: "Ford",
+    model: "Ranger 2.5 Double Cab 4x4",
+    year: 2001,
+    price: null, // TODO: the client has not set an asking price yet
+    mileage: null, // TODO: confirm
+    transmission: "Manual", // stated by the client
+    fuelType: "Diesel", // stated by the client
+    condition:
+      "Used, runner. White double cab with 4x4.",
+    location: "Windhoek, Namibia",
+    description:
+      "New in the yard book: a 2001 Ford Ranger 2.5 diesel double cab in white, manual gearbox, 4x4, and it runs. An honest, older workhorse with the double cab practicality that keeps a team moving and the 4x4 for the rough weeks. The asking price and mileage are being confirmed, so enquire and we will send the figures with the papers. View and bid at REM Erf 46 Platinum Street, Prosperita, or call 081 864 6808.",
+    images: ["/images/vehicles/ford-ranger-2001.webp"],
+    status: "available",
+    auctionDate: null,
+    facebookUrl: "", // no Facebook post: supplied on WhatsApp, photos on filebin
+    dataConfidence: "partial",
+  },
   {
     id: "fb-28381700051450264",
     slug: "renault-koleos-2013-4wd",

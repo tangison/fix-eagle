@@ -21,6 +21,23 @@ export function generateStaticParams() {
   return vehicles.map((v) => ({ slug: v.slug }));
 }
 
+/** Real pixel sizes of each listing's primary photo (all 4:3). */
+const ogSizes: Record<string, { width: number; height: number }> = {
+  "bmw-x3-2012": { width: 2048, height: 1536 },
+  "ford-ranger-2001-double-cab": { width: 1920, height: 1440 },
+  "renault-koleos-2013-4wd": { width: 2048, height: 1536 },
+  "volkswagen-amarok-tdi-2014": { width: 2048, height: 1536 },
+  "wanted-used-vehicles": { width: 2048, height: 1536 },
+  "nissan-note": { width: 1536, height: 1152 },
+  "jeep-patriot-urgent-sale": { width: 2048, height: 1536 },
+  "toyota-ipsum-2006": { width: 2048, height: 1536 },
+  "volkswagen-golf-fsi-2006": { width: 1600, height: 1200 },
+  "ford-ranger-king-cab": { width: 2048, height: 1536 },
+  "mercedes-b-class": { width: 1536, height: 1152 },
+  "chevrolet-aveo-ls-2015": { width: 2048, height: 1536 },
+};
+const ogDefault = { width: 2048, height: 1536 };
+
 export async function generateMetadata({
   params,
 }: {
@@ -35,6 +52,7 @@ export async function generateMetadata({
     vehicle.description.length > 155
       ? `${vehicle.description.slice(0, 152)}…`
       : vehicle.description;
+  const size = ogSizes[vehicle.slug] ?? ogDefault;
 
   return {
     title,
@@ -48,8 +66,8 @@ export async function generateMetadata({
       images: [
         {
           url: vehicle.images[0],
-          width: 2048,
-          height: 1536,
+          width: size.width,
+          height: size.height,
           alt: `${vehicle.title} at the Fix Eagle yard in Windhoek`,
         },
       ],
@@ -234,21 +252,23 @@ export default async function VehiclePage({
         </div>
       </section>
 
-      {/* Source post */}
-      <section className="shell pb-16 md:pb-20" aria-label="Source post">
-        <h2 className="text-[clamp(1.5rem,2.8vw,2.1rem)]">As advertised</h2>
-        <p className="measure mt-3 text-soft">
-          Every listing starts as a post on Facebook, where Namibia buys and
-          sells. The original is right here.
-        </p>
-        <div className="mt-8 max-w-[42rem]">
-          <FacebookEmbed
-            url={vehicle.facebookUrl}
-            kind={vehicle.isVideoPost ? "video" : "post"}
-            title={vehicle.title}
-          />
-        </div>
-      </section>
+      {/* Source post: only when the listing carries a Facebook post. */}
+      {vehicle.facebookUrl ? (
+        <section className="shell pb-16 md:pb-20" aria-label="Source post">
+          <h2 className="text-[clamp(1.5rem,2.8vw,2.1rem)]">As advertised</h2>
+          <p className="measure mt-3 text-soft">
+            Every listing starts as a post on Facebook, where Namibia buys and
+            sells. The original is right here.
+          </p>
+          <div className="mt-8 max-w-[42rem]">
+            <FacebookEmbed
+              url={vehicle.facebookUrl}
+              kind={vehicle.isVideoPost ? "video" : "post"}
+              title={vehicle.title}
+            />
+          </div>
+        </section>
+      ) : null}
 
       {/* Bid interest form */}
       <section className="hair-t section" aria-label="Enquire or register bid interest">
